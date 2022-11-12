@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<nav class="navbar navbar-light bg-light justify-content-between">
+  <a class="navbar-brand">Список пациентов</a>
+  <form method="GET" action = "{% url "search" %}" class="form-inline">
+    <div class="input-group mb-3">
+      <input class="form-control mr-sm-2" type="search" name="search" placeholder="Поиск пациента" aria-label="Search">
+      <div class="input-group-append">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+      </div>
+    </div>
+  </form>
+</nav>
+
+{% if not pacients %}
+  <p class="card-text"><b>Пациентов пока что нет!</b></p>
+{% else %}
+  {% for pacient in pacients %}
+    <a href="/pacient/{{pacient.get_id}}">
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">{{pacient}}</h5>
+            <p class="card-text">{{pacient.get_current_age}}, {% if pacient.gender == "м" %} мужчина {% else %} женщина {% endif %}</p>
+            </div>
+        </div>
+    </a>
+  {% endfor %}
+  {% include "pagination.html" with page=pacients %}
+{% endif %}
+{% endblock %}

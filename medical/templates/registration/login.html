@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Авторизация </h1>
+  </div><!-- End Page Title -->
+
+
+
+<div class="container">
+<div class="row">
+  <div class="col-xl-12">
+
+    <form action="." method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+
+        {% if form.errors %}
+        <p><font color="#dc3545"><b> Неправильный логин или пароль. Попробуйте снова!</b></font></p>
+        {% endif %}
+
+        <b><label for="exampleInputEmail1" class="form-label">Логин</label></b>
+        <p><td>{{ form.username }}</td>
+      <div class="mb-3">
+        <b><label for="exampleInputPassword1" class="form-label">Пароль</label></b>
+        <p><td>{{ form.password }}</td>
+      </div>
+
+      <button type="submit" class="btn btn-primary" name="auth">Войти</button>
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+  </div>
+</div>
+</div>
+
+
+</main>
+{% endblock %}

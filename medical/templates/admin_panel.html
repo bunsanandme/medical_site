@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="section dashboard">
+
+    <div class="row">
+
+      <!-- Left side columns -->
+      <div class="col-lg-8">
+        <div class="row">
+
+          <!-- Sales Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+              <div class="card-body">
+                <h5 class="card-title">Работа с пациентами</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-robot"></i>
+                  </div>
+                  <div class="ps-3">
+                  	<a class=" btn btn-success mb-2" href="{% url "add" %}"> <i class="bi bi-person-plus me-1"></i>Добавить пациента</a>
+                        <a class=" btn btn-primary" href="{% url "show_all" %}"> <i class="bi bi-search me-1"></i>Найти пациента</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Sales Card -->
+
+          <!-- Revenue Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+
+              <div class="card-body">
+                <h5 class="card-title"> Паицентов в системе </span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-person"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{amount_pacient}}</h6>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Revenue Card -->
+              </div>
+            </div>
+          </div><!-- End Reports -->
+</section>
+</main>
+{% endblock %}
+

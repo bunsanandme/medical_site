@@ -1,0 +1,11 @@
+<div class="pagination">
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}" class="page-link">Предыдущая</a>
+        {% endif %}
+        <span class="page-link">
+            <font color="#012970">Страница {{ page.number }} из {{ page.paginator.num_pages }}</font>
+        </span>
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}" class="page-link">Следующая</a>
+        {% endif %}
+</div>

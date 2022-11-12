@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <h5 class="card-header">
+            Новый пациент
+          </h5>
+          <div class="card-body">
+            <form method="POST" action=".">
+              {% csrf_token %}
+              <div class="mb-3">
+                <b><label for="exampleInputEmail1" class="form-label">Имя</label></b>
+                <p>{{form.name}}</p>
+              </div>
+              <div class="mb-3">
+                <b><label for="exampleInputPassword1" class="form-label">Фамилия</label></b>
+                <p>{{form.surname}}</p>
+              </div>
+              <div class="mb-3">
+                <b><label for="exampleInputPassword1" class="form-label">Пол</label></b>
+                <p>{{form.gender}}</p>
+              </div>
+              <div class="mb-3">
+                <b><label for="exampleInputPassword1" class="form-label">Год рождения</label></b>
+                <p>{{form.date_birth}}</p>
+              </div>
+              <button type="submit" class="btn btn-primary" name ="addpacient">Добавить</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

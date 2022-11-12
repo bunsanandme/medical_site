@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+  {% load static %}
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Реестр пациентов</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="{% static "img/favicon.png" %}" rel="icon">
+    <link href="{% static "img/apple-touch-icon.png" %}" rel="apple-touch-icon">
+
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+    <link href="{% static "vendor/boxicons/css/boxicons.min.css" %}" rel="stylesheet">
+    <link href="{% static "vendor/quill/quill.snow.css" %}" rel="stylesheet">
+    <link href="{% static "vendor/quill/quill.bubble.css" %}" rel="stylesheet">
+    <link href="{% static "vendor/remixicon/remixicon.css" %}" rel="stylesheet">
+    <link href="{% static "vendor/simple-datatables/style.css" %}" rel="stylesheet">
+
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+
+  </head>
+  <body>
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="{% url "home" %}" class="logo d-flex align-items-center">
+          <img src="{% static "img/logo.png" %}" alt="">
+          <span class="d-none d-lg-block">Roboticreg</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+      </div>
+    </header>
+
+    <aside id="sidebar" class="sidebar">
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          {% if user.is_authenticated %}
+            <i class="bi bi-person-circle"></i>
+            <span><b>Пользователь {{ user.first_name }} ({{ user.username }})</b></span>
+          
+        </li>
+      </ul>
+      
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="{% url "home" %}">
+            <i class="bi bi-house-door"></i>
+            <span>Главная</span>
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="{% url "add" %}">
+            <i class="bi bi-person-plus"></i>
+            <span>Добавление пациента</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="{% url "show_all" %}">
+            <i class="bi bi-person-lines-fill"></i>
+            <span> Список пациентов </span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="{% url "logout" %}">
+            <i class="bi bi-box-arrow-in-right"></i>
+            <span>Выход</span>
+          </a>
+        </li>
+      </ul>
+      {% endif %}
+    </aside>
+    <main id="main" class="main">
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="{% static "/vendor/apexcharts/apexcharts.min.js" %}"></script>
+    <script src="{% static "/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "/vendor/chart.js/chart.min.js" %}"></script>
+    <script src="{% static "/vendor/echarts/echarts.min.js" %}"></script>
+    <script src="{% static "/vendor/quill/quill.min.js" %}"></script>
+    <script src="{% static "/vendor/simple-datatables/simple-datatables.js" %}"></script>
+    <script src="{% static "/vendor/tinymce/tinymce.min.js" %}"></script>
+    <script src="{% static "/vendor/php-email-form/validate.js" %}"></script>
+
+    <script src="{% static "/js/main.js" %}"></script>
+
+  </body>
+</html>

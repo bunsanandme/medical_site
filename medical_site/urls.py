@@ -1,0 +1,20 @@
+from django.contrib import admin
+from django.urls import path, include
+from medical import views
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.home, name="home"),
+    path("add/", views.add_pacient, name="add"),
+    path("pacient/<int:pacient_id>", views.show_pacient, name="pacient"),
+    path("pacient/delete/<int:pacient_id>", views.action_with_pacient, name="delete"),
+    path("pacient/all", views.show_all_pacients, name="show_all"),
+    path("test/", views.test),
+    path("pacient/edit/<int:pacient_id>", views.action_with_pacient, name="edit"),
+    path("pacient/", views.search_pacient, name="search")
+]
+
+urlpatterns += [
+    path('', include('django.contrib.auth.urls')),
+]

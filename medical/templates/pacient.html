@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-6">
+        <div class="card">
+          <h5 class="card-header">
+            Карточка пациента
+          </h5>
+          
+          <div class="card-body">
+            <form method="POST" action="{% url "delete" pacient.get_id %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <b><label for="exampleInputEmail1" class="form-label">Имя</label></b>
+                <p>{{form.name}}</p>
+              </div>
+              <div class="mb-3">
+                <b><label for="exampleInputPassword1" class="form-label">Фамилия</label></b>
+                <p>{{form.surname}}</p>
+              </div>
+              <div class="mb-3">
+                <b><label for="exampleInputPassword1" class="form-label">Пол</label></b>
+                {{form.gender}}
+              </div>
+              <div class="mb-3">
+                <b><label for="exampleInputPassword1" class="form-label">Дата рождения</label></b>
+                <p>{{form.date_birth}} ({{pacient.get_current_age}})</p>
+              </div>
+              <button type="submit" class="btn btn-danger" name="deletepacient"> Удалить </button>
+              <button type="submit" class="btn btn-success" name="editpacient"> Изменить </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="col-xl-6">
+        <div class="card">
+          <h5 class="card-header">
+            Карточки
+          </h5>
+          <div class="card-body">
+            <form action="addNewCard.php" method="GET">
+                <input type="number" name="pacient" value="{{pacient.get_id}}" hidden>
+                <button type="submit" class="btn btn-success" name="addcard">Добавить новую карточку</button>
+
+            </form>
+
+            <?php
+              $allCards = R::getAll('Select * from card WHERE pacient = ?', [$pacient['id']]);
+
+
+            ?>
+
+            <table class="table table-hover">
+
+            <tr>
+              <th>История</th>
+              <th>Дата создания</th>
+              <th>Дата приема</th>
+              <th>Дата согласия</th>
+              <th> </th>
+              <th> </th>
+            </tr>
+            <?php     foreach ($allCards as $card) { ?>
+            <tr>
+              <td><?php echo $card['numberhistory'] ?></td>
+              <td><?php echo date("d.m.Y", strtotime($card['datecr']));?></td>
+              <td><?php echo date("d.m.Y",  strtotime($card['admissiondate']));?></td>
+              <td><?php echo date("d.m.Y",strtotime( $card['consentdate'])); ?></td>
+              <td><a href="card.php?id=<?php echo $card['id'] ?>" class="btn btn-dark">Показать </a></td>
+              <td><form action="pacient.php" method="POST">
+                <input type="hidden"  name='id' value="<?php echo $card['id']; ?>">
+                <input type="hidden"  name='pacient' value="<?php echo$pacient['id'];?>">
+              <button type="submit" class="btn btn-danger" name="delete">Удалить</button>
+              </form></td>
+            </tr>
+            <?php    } ?>
+            </table>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+
+</main >
+
+{% endblock %}
