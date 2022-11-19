@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, PacientForm, SearchForm
+from .forms import LoginForm, PacientForm, PreprocedureCardForm
 from django.contrib.auth.decorators import login_required
-from .models import Pacient
+from .models import Pacient, PreprocedureCard
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, F
-from django.views.decorators.csrf import csrf_exempt
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -35,7 +35,8 @@ def home(request):
 def show_pacient(request, pacient_id):
         pacient = get_object_or_404(Pacient, pacient_id=pacient_id)
         form = PacientForm(instance=pacient)
-        return render(request, 'pacient.html', {'pacient': pacient, 'form': form})
+        cards = PreprocedureCard.objects.filter(pacient_id=pacient)
+        return render(request, 'pacient.html', {'pacient': pacient, 'form': form, "cards": cards})
 
 
 @login_required
@@ -58,6 +59,8 @@ def add_pacient(request):
 def action_with_pacient(request, pacient_id):
     if "deletepacient" in request.POST:
         pacient = Pacient.objects.get(pacient_id=pacient_id)
+        cards = PreprocedureCard.objects.filter(pacient_id=pacient_id)
+        cards.delete()
         pacient.delete()
         return redirect("/pacient/all")
     else:
@@ -70,7 +73,8 @@ def action_with_pacient(request, pacient_id):
             pacient.date_birth=new_pacient.date_birth
             pacient.gender=new_pacient.gender
             pacient.save()
-        return redirect(f'/pacient/{pacient.pacient_id}', {'pacient': pacient})
+            cards = PreprocedureCard.objects.filter(pacient_id=pacient_id)
+        return redirect(f'/pacient/{pacient.pacient_id}', {'pacient': pacient, "cards": cards})
 
 @login_required
 def edit_pacient(request, pacient_id):
@@ -94,7 +98,6 @@ def show_all_pacients(request):
                    'pacients': pacients})
 
 @login_required
-@csrf_exempt
 def search_pacient(request):
     results = []
     if request.method == "GET":
@@ -115,5 +118,19 @@ def search_pacient(request):
         return render(request, "pacient_list.html",
                   {'page': page,
                    'pacients': pacients})
+
+@login_required
+def show_card(request, card_id):
+    card = PreprocedureCard.objects.get(card_id=card_id)
+    form = PreprocedureCardForm(instance=card)
+    return render(request, "pacient_card.html", {"card": card, "form": form})
+
+@login_required
+def add_new_card(request, pacient_id):
+    card = PreprocedureCard(pacient_id=Pacient.objects.get(pacient_id=pacient_id))
+    card.save()
+    form = PreprocedureCardForm(instance=card)
+    return render(request, "pacient_card.html", {"card": card, "form": form})
+
 def test(request):
-    return render(request, "index.html")
+    return render(request, "pacient_card.html")

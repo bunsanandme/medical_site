@@ -1,7 +1,7 @@
 import datetime
 from django.db import models
 from django.core.exceptions import ValidationError
-
+from django.utils.timezone import now
 
 class Pacient(models.Model):
     GENDER_CHOICES = (
@@ -35,3 +35,27 @@ class Pacient(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.surname}"
+
+class PreprocedureCard(models.Model):
+    SMOKE_CHOICES = (
+        ("Да","Да"),
+        ("Нет","Нет"),
+    )
+    card_id = models.AutoField(primary_key=True)
+    pacient_id = models.ForeignKey(
+        Pacient,
+        on_delete=models.CASCADE,
+    )
+    creation_date = models.DateTimeField(default=now)
+    admission_date = models.DateTimeField(default=now)
+    sign_date = models.DateField(default=now)
+    is_smoker = models.CharField(max_length=3, choices=SMOKE_CHOICES, default="Нет")
+    packyears = models.IntegerField(default=0)
+    height = models.IntegerField(default=0)
+    weight = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.pacient_id)+", "+self.admission_date.date().strftime(r"%d/%m/%Y")
+    
+    def get_id(self):
+        return int(self.card_id)

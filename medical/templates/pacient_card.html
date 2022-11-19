@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Карточка пациента {{card.pacient_id}} </h1>
+    </div>
+    <a href="/pacient/{{card.pacient_id.get_id}}"class="btn btn-primary">Назад</a>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Предварительная информация
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="card">
+              <h5 class="card-title"></h5>
+              <div class="card-body">
+                <form method="POST" action="addNewCard.php">
+                  <div class="mb-3">
+                    <label for="date" class="form-label">Дата и время приема</label>
+                    <!-- <input type="date" class="form-control"   name="admissiondate"> -->
+                    {{form.admission_date}}
+                  </div>
+                  <div class="mb-3">
+                    <label for="date" class="form-label">Дата подписания согласия</label>
+                    <!-- <input type="date" class="form-control"   name="consentdate"> -->
+                    {{form.sign_date}}
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Стаж курения</label>
+                    {{form.is_smoker}}
+                  </div>
+
+                  <div class="mb-3" id="packyears">
+                    <label class="form-label" disabled>Продолжительность курения</label>
+                    <!-- <input type="number" class="form-control"   name="yearssmoking"> -->
+                    {{form.packyears}}
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="mm" class="form-label">Рост (см)</label>
+                    <!-- <input type="number" class="form-control"   name="height"> -->
+                    {{form.height}}
+                  </div>
+                  <div class="mb-3">
+                    <label for="mm" class="form-label">Вес (кг)</label>
+                    <!-- <input type="number" class="form-control"   name="weight"> -->
+                    {{form.weight}}
+                  </div>
+                  <button type="submit" class="btn btn-primary" name="addNewCard">Добавить карту</button>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main >
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="{% static "js/jquery.min.js" %}"></script>
+
+<script>
+  $(document).ready(function() {
+  if ($('#smoker option:selected').text() == "Да") {
+    $('#packyears').fadeIn(300);
+  } else {
+    $('#packyears').fadeOut(300);
+  }
+  $("#packyears").css("display", "none")
+  $("#smoker").change(function() {
+    if ($('#smoker option:selected').text() == "Да") {
+      $('#packyears').fadeIn(300);
+    } else {
+      $('#packyears').fadeOut(300);
+    }
+
+  });
+});
+
+</script>
+{% endblock %}

@@ -10,9 +10,10 @@ urlpatterns = [
     path("pacient/<int:pacient_id>", views.show_pacient, name="pacient"),
     path("pacient/delete/<int:pacient_id>", views.action_with_pacient, name="delete"),
     path("pacient/all", views.show_all_pacients, name="show_all"),
-    path("test/", views.test),
+    path("pacient/card/<int:card_id>", views.show_card, name="show_card"),
     path("pacient/edit/<int:pacient_id>", views.action_with_pacient, name="edit"),
-    path("pacient/", views.search_pacient, name="search")
+    path("pacient/", views.search_pacient, name="search"),
+    path("card/create/<int:pacient_id>", views.add_new_card, name="add_card")
 ]
 
 urlpatterns += [

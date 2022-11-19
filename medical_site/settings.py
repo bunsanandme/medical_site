@@ -113,11 +113,16 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L1ON = True
+
 USE_TZ = True
 
 LOGIN_REDIRECT_URL = reverse_lazy("home")
 LOGIN_URL = reverse_lazy("login")
 LOGOUT_URL = reverse_lazy("logout")
+
+
+DATE_INPUT_FORMATS =  ['%d/%m/%Y']
 
 
 
