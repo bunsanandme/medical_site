@@ -1,0 +1,68 @@
+{% block medical_history %}
+
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Медицинская история
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_medical_history" card.get_id %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="date" class="form-label">У пациента есть заболевания в данный момент?</label>
+                {{form_mh.relevant_disease}}
+              </div>
+                <table class="table" style="width: 60%" id = "diseasetable">
+                    <tbody>
+                        <tr>
+                            <td>Диабет</td>
+                            <td>{{form_mh.has_diabetes}}</td>
+                            <td>Гипертония</td>
+                            <td>{{form_mh.has_hypertension}}</td>
+                        </tr>
+                        <tr>
+                            <td>Сердечно-сосудистые</td>
+                            <td>{{form_mh.has_cardiovascular}}</td>
+                            <td>ХОБЛ</td>
+                            <td>{{form_mh.has_cord}}</td>
+                        </tr>
+                        <tr>
+                            <td>Болезни почек</td>
+                            <td>{{form_mh.has_renal_disease}}</td>
+                            <td>Болезни печени</td>
+                            <td>{{form_mh.has_liver_disease}}</td>
+                        </tr>
+                        <tr>
+                            <td>Апноэ во сне</td>
+                            <td>{{form_mh.has_sleep_aphea}}</td>
+                            <td>ГЭРБ</td>
+                            <td>{{form_mh.has_gerd}}</td>
+                        </tr>
+                        <tr>
+                            <td>Депрессия</td>
+                            <td>{{form_mh.has_depression}}</td>
+                            <td>Остеохондроз</td>
+                            <td>{{form_mh.has_osteoarthritis}}</td>
+                        </tr>
+                        <tr>
+                            <td>Хронические боли</td>
+                            <td>{{form_mh.has_chronic_pain}}</td>
+                            <td>Инсульт</td>
+                            <td>{{form_mh.has_stroke}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, widgets
-from .models import Pacient, PreprocedureCard
+from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -30,16 +30,25 @@ class PreprocedureCardForm(ModelForm):
         fields = ("creation_date", "admission_date", "sign_date", "is_smoker", "packyears", "height", "weight")
         widgets = {
             'admission_date': widgets.DateTimeInput(attrs={"type": "datetime-local",
-                                                   "style": "width: 200px"}),
+                                                   "style": "width: 220px"}),
             'sign_date': widgets.DateInput(attrs={"type": "date",
                                                    "style": "width: 200px"}),
-        "is_smoker":   forms.Select(attrs={"class": "form-select",
-                                          "style": "width: 200px",
-                                          "id": "smoker",
-                                          }),
+            "is_smoker":   forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 200px",
+                                            "id": "smoker",}),                               
+            "packyears": forms.TextInput(attrs={"id": "packyears",})                                       
+            }
 
-       
-     
-        "packyears": forms.TextInput(attrs={"id": "packyears",})                                       
-        }
-            
+class MedicalHistoryForm(ModelForm):
+    class Meta:
+        model = MedicalHistory
+        fields = "__all__"
+        exclude = ("card_id",)
+
+class SurgicalHistoryForm(ModelForm):
+    class Meta:
+        model = SurgicalHistory
+        fields = "__all__"
+        exclude = ("card_id",)
+        widgets = {"surgion_description": widgets.Textarea(attrs={"class": "form-control",
+                                                                  "id": "surgion_description"})}

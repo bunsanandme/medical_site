@@ -15,7 +15,7 @@
 </nav>
 
 {% if not pacients %}
-  <p class="card-text"><b>Пациентов пока что нет!</b></p>
+  <p class="card-text"><b>Пациентов пока что нет! <a href="{% url "add" %}">Добавить нового пациента</a></b></p>
 {% else %}
   {% for pacient in pacients %}
     <a href="/pacient/{{pacient.get_id}}">

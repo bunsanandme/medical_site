@@ -1,0 +1,53 @@
+{% block preprocedure %}
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        Предварительная информация
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_card" card.get_id %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="date" class="form-label">Дата создания приема</label>
+                {{form_preproc.creation_date}}
+              </div>
+              <div class="mb-3">
+                <label for="date" class="form-label">Дата и время приема</label>
+                {{form_preproc.admission_date}}
+              </div>
+              <div class="mb-3">
+                <label for="date" class="form-label">Дата подписания согласия</label>
+                {{form_preproc.sign_date}}
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Стаж курения</label>
+                {{form_preproc.is_smoker}}
+              </div>
+
+              <div class="mb-3" id="packyears">
+                <label class="form-label">Продолжительность курения</label>
+                {{form_preproc.packyears}}
+              </div>
+
+              <div class="mb-3">
+                <label for="mm" class="form-label">Рост (см)</label>
+                {{form_preproc.height}}
+              </div>
+              <div class="mb-3">
+                <label for="mm" class="form-label">Вес (кг)</label>
+                {{form_preproc.weight}}
+              </div>
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

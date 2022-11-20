@@ -1,0 +1,32 @@
+{% block surgical_history %}
+
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Хирургическая история
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_surgical_history" card.get_id %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="date" class="form-label">Были ли у пациента какие-либо предшествующие абдоминальные операции?</label>
+                {{form_sh.has_abdominal_surgery}}
+              </div>
+              <div class="mb-3" id="surgion_description">
+                <label for="date" class="form-label">Опишите проводимые процедуры</label>
+                {{form_sh.surgion_description}}
+              </div>
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
