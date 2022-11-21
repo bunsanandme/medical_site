@@ -1,0 +1,75 @@
+{% block surgical_procedure_details %}
+
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+        Подробности хирургической процедуры
+      </button>
+    </h2>
+    <div id="collapseSix" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_spd" card.get_id %}">
+              {% csrf_token %}
+                <table class="table" style="width: 60%" id = "diseasetable">
+                    <tbody>
+                        <tr>
+                          <td>Время начала операции</td>
+                          <td>{{form_spd.surg_start_time}}</td>
+                        </tr>
+                        <tr>
+                          <td>Начало записи</td>
+                          <td>{{form_spd.docking_begins}}</td>
+                        </tr>
+                        <tr>
+                          <td>Конец записи</td>
+                          <td>{{form_spd.docking_ends}}</td>
+                        </tr>
+                          <td>Время запуска консоли</td>
+                          <td>{{form_spd.console_start_time}}</td>
+                        </tr>
+                        <tr>
+                          <td>Время выключения консоли</td>
+                          <td>{{form_spd.console_end_time}}</td>
+                        </tr>
+                        <tr>
+                          <td>Время окончания операции</td>
+                          <td>{{form_spd.surg_end_time}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mb-3">
+                  <label for="date" class="form-label">Высота стола(измерение проводится от пупка пациента), см   </label>
+                  {{form_spd.table_height}}
+                </div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Показания к выполнению процедуры</td>
+                      <td>{{form_spd.indication_for_procedure}}</td>
+                    </tr>
+                    <tr>
+                      <td>Детали процедуры</td>
+                      <td>{{form_spd.procedural_details}}</td>
+                    </tr>
+                    <tr>
+                      <td>Спецификация</td>
+                      <td>{{form_spd.specification}}</td>
+                    </tr>
+                    <tr>
+                      <td>Наличие особых условий</td>
+                      <td>{{form_spd.special_conditions_present}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

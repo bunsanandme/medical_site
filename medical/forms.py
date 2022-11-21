@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, widgets
-from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure
+from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -87,3 +87,18 @@ class UrologicalProcedureForm(ModelForm):
                     "special_conditions_present": widgets.Textarea(attrs={"class": "form-control",
                     "rows": 2}),
                 }
+
+class SurgicalProceduralDetailForm(ModelForm):
+    class Meta:
+        model = SurgicalProceduralDetail
+        fields = "__all__"
+        exclude = ("card_id",)
+        widgets = {"indication_for_procedure": widgets.Textarea(attrs={"class": "form-control",
+                                                        "rows": 2}),
+            "procedural_details": widgets.Textarea(attrs={"class": "form-control",
+                                                            "rows": 2}),
+            "specification": widgets.Textarea(attrs={"class": "form-control",
+            "rows": 2}),
+            "special_conditions_present": widgets.Textarea(attrs={"class": "form-control",
+            "rows": 2}),
+        }

@@ -178,3 +178,34 @@ class UrologicalProcedure(models.Model):
 
     def __str__(self):
         return f"UP #{self.uro_procedure_id}"
+
+class SurgicalProceduralDetail(models.Model):
+    surg_proc_detail_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+        Card,
+        on_delete=models.CASCADE,
+        default=0
+    )
+
+    surg_start_time = models.TimeField(default=timezone.now())
+    docking_begins = models.TimeField(default=timezone.now())
+    docking_ends = models.TimeField(default=timezone.now())
+    console_start_time = models.TimeField(default=timezone.now())
+    console_end_time = models.TimeField(default=timezone.now())
+    surg_end_time = models.TimeField(default=timezone.now())
+
+    table_height = models.IntegerField(default=0)
+
+    supine_position = models.CharField(max_length=80, default=" ",blank=True)
+    lithotomy_position = models.CharField(max_length=80, default=" ",blank=True)
+    lateral_position = models.CharField(max_length=80, default=" ",blank=True)
+    prone_position = models.CharField(max_length=80, default=" ",blank=True)
+    beach_chair_position = models.CharField(max_length=80, default=" ",blank=True)
+    other = models.CharField(max_length=200, default=" ",blank=True)
+
+    indication_for_procedure = models.TextField(default=" ", blank=True)
+    procedural_details = models.TextField(default=" ", blank=True)
+    specification = models.TextField(default=" ", blank=True)
+    special_conditions_present = models.TextField(default=" ", blank=True)
+    def __str__(self):
+        return f"SPD #{self.surg_proc_detail_id}"

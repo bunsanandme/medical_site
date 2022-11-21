@@ -19,8 +19,9 @@ urlpatterns = [
     path("sh/edit/<int:card_id>", views.edit_surgical_history, name="edit_surgical_history"),
     path("gp/edit/<int:card_id>", views.edit_gastro_procedure, name="edit_gastro_procedure"),
     path("up/edit/<int:card_id>", views.edit_uro_procedure, name="edit_uro_procedure"),
+    path("spd/edit/<int:card_id>", views.edit_spd, name="edit_spd"),
 ]
 
-urlpatterns += [
+urlpatterns += [ 
     path('', include('django.contrib.auth.urls')),
 ]

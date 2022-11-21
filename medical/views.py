@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm
+from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm, SurgicalProceduralDetailForm
 from django.contrib.auth.decorators import login_required
-from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure
+from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, F
 
@@ -25,11 +25,16 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
 
-@login_required
+
 def home(request):
     amount_pacient = Pacient.objects.all()
     return render(request, "admin_panel.html", {"amount_pacient": len(amount_pacient)})
 
+
+
+def home_unauth(request):
+    amount_pacient = Pacient.objects.all()
+    return render(request, "admin_panel_unauth.html", {"amount_pacient": len(amount_pacient)})
 
 @login_required
 def show_pacient(request, pacient_id):
@@ -127,12 +132,14 @@ def show_card(request, card_id):
     form_sh = SurgicalHistoryForm(instance=SurgicalHistory.objects.get(card_id=card))
     form_gp = GastrointestinalProcedureForm(instance=GastrointestinalProcedure.objects.get(card_id=card))
     form_up = UrologicalProcedureForm(instance=UrologicalProcedure.objects.get(card_id=card))
+    form_spd = SurgicalProceduralDetailForm(instance=SurgicalProceduralDetail.objects.get(card_id=card))
     context = {"card": card, 
                 "form_preproc": form_preproc, 
                 "form_mh": form_mh,
                 "form_sh": form_sh,
                 "form_gp": form_gp,
-                "form_up": form_up,}
+                "form_up": form_up,
+                "form_spd": form_spd,}
     return render(request, "pacient_card.html", context)
 
 @login_required
@@ -149,6 +156,8 @@ def add_new_card(request, pacient_id):
     gastro_procedure.save()
     uro_procedure = UrologicalProcedure(card_id = card)
     uro_procedure.save()
+    surg_proc_detail = SurgicalProceduralDetail(card_id = card)
+    surg_proc_detail.save()
     return redirect(show_card, card.get_id())
 
 @login_required
@@ -177,19 +186,9 @@ def edit_medical_history(request, card_id):
         form = MedicalHistoryForm(data=request.POST)
         if form.is_valid():
             new_card = form.save(commit=False)
-            card.relevant_disease = new_card.relevant_disease
-            card.has_diabetes = new_card.has_diabetes
-            card.has_hypertension = new_card.has_hypertension
-            card.has_cardiovascular = new_card.has_cardiovascular
-            card.has_cord = new_card.has_cord
-            card.has_renal_disease = new_card.has_renal_disease
-            card.has_liver_disease = new_card.has_liver_disease
-            card.has_sleep_aphea = new_card.has_sleep_aphea
-            card.has_gerd = new_card.has_gerd
-            card.has_depression = new_card.has_depression
-            card.has_osteoarthritis = new_card.has_osteoarthritis
-            card.has_chronic_pain = new_card.has_chronic_pain
-            card.has_stroke = new_card.has_stroke
+            card = new_card
+            card.medical_history_id = MedicalHistory.objects.get(card_id=Card.objects.get(card_id=card_id)).medical_history_id
+            card.card_id = Card.objects.get(card_id=card_id)
             card.save()
         return redirect(show_card, card_id)
 
@@ -226,7 +225,20 @@ def edit_uro_procedure(request, card_id):
         if form.is_valid():
             new_card = form.save(commit=False)
             card = new_card
-            card.uro_procedure_id =  UrologicalProcedure.objects.get(card_id=Card.objects.get(card_id=card_id)).uro_procedure_id
+            card.uro_procedure_id = UrologicalProcedure.objects.get(card_id=Card.objects.get(card_id=card_id)).uro_procedure_id
+            card.card_id = Card.objects.get(card_id=card_id)
+            card.save()
+        return redirect(show_card, card_id)
+
+@login_required
+def edit_spd(request, card_id):
+    if "editcard" in request.POST: 
+        card = SurgicalProceduralDetail.objects.get(card_id=Card.objects.get(card_id=card_id))
+        form = SurgicalProceduralDetailForm(data=request.POST)
+        if form.is_valid():
+            new_card = form.save(commit=False)
+            card = new_card
+            card.surg_proc_detail_id = SurgicalProceduralDetail.objects.get(card_id=Card.objects.get(card_id=card_id)).surg_proc_detail_id
             card.card_id = Card.objects.get(card_id=card_id)
             card.save()
         return redirect(show_card, card_id)
