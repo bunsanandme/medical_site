@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, widgets
-from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory
+from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -44,6 +44,8 @@ class MedicalHistoryForm(ModelForm):
         model = MedicalHistory
         fields = "__all__"
         exclude = ("card_id",)
+        widgets = {"relevant_disease": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 100px",})}
 
 class SurgicalHistoryForm(ModelForm):
     class Meta:
@@ -51,4 +53,23 @@ class SurgicalHistoryForm(ModelForm):
         fields = "__all__"
         exclude = ("card_id",)
         widgets = {"surgion_description": widgets.Textarea(attrs={"class": "form-control",
-                                                                  "id": "surgion_description"})}
+                                                                  "id": "surgion_description"}),
+                   "has_abdominal_surgery": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 100px",})}
+                        
+class GastrointestinalProcedureForm(ModelForm):
+    class Meta:
+        model = GastrointestinalProcedure
+        fields = "__all__"
+        exclude = ("card_id",)
+        widgets = {"indication_for_procedure": widgets.Textarea(attrs={"class": "form-control",
+                                                                "rows": 2}),
+                    "procedural_details": widgets.Textarea(attrs={"class": "form-control",
+                                                                   "rows": 2}),
+                    "specification": widgets.Textarea(attrs={"class": "form-control",
+                    "rows": 2}),
+                    "special_conditions_present": widgets.Textarea(attrs={"class": "form-control",
+                    "rows": 2}),
+                    
+        }
+

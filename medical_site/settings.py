@@ -58,6 +58,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR / "medical/templates",
+            BASE_DIR / "medical/templates/card_forms",
         ],
         'APP_DIRS': True,
         'OPTIONS': {

@@ -1,0 +1,105 @@
+{% block gastrointestinal_procedure %}
+
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          Желудочно-кишечная процедура
+      </button>
+    </h2>
+    <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_gastro_procedure" card.get_id %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="mm" class="form-label">Первый хирург</label>
+                {{form_gp.first_surgeon}}
+              </div>
+              <div class="mb-3">
+                <label for="mm" class="form-label">Второй хирург</label>
+                {{form_gp.second_surgeon}}
+              </div>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Холецистэктомия</td>
+                    <td>{{form_gp.cholecystectomy}}</td>
+                    <td>Бариатрические процедуры</td>
+                    <td>{{form_gp.bariatric}}</td>
+                  </tr>
+                  <tr>
+                    <td>Резекция пищевода</td>
+                    <td>{{form_gp.esophageal}}</td>
+                    <td>Резекция желудка</td>
+                    <td>{{form_gp.gastric}}</td>
+                  </tr>
+                  <tr>
+                    <td>Гемиколэктомия справа</td>
+                    <td>{{form_gp.hemicolectomy}}</td>
+                    <td>Хирургия печени</td>
+                    <td>{{form_gp.gastric}}</td>
+                  </tr>
+                  <tr>
+                    <td>Паховая грыжа односторонняя</td>
+                    <td>{{form_gp.hernia_unilateral}}</td>
+                    <td>Паховая грыжа дваусторонняя</td>
+                    <td>{{form_gp.hernia_bilateral}}</td>
+                  </tr>
+                  <tr>
+                    <td>Вентральная грыжа</td>
+                    <td>{{form_gp.ventral_hernia}}</td>
+                    <td>Фундопликация</td>
+                    <td>{{form_gp.fundoplication}}</td>
+                  </tr>
+                  <tr>
+                    <td>Резекция сигмовидной кишки</td>
+                    <td>{{form_gp.sigmoid_resection}}</td>
+                    <td>Ректальная хирургия</td>
+                    <td>{{form_gp.rectal}}</td>
+                  </tr>
+                  <tr>
+                    <td>Имплантат электростимулятора нижней сфинктер пищевода</td>
+                    <td>{{form_gp.esophagus_implants}}</td>
+                    <td>Имплантат магнитной антирефлюксной ленты LINX</td>
+                    <td>{{form_gp.linx_implants}}</td>
+                  </tr>
+                  <tr>
+                    <td>Другое</td>
+                    <td colspan="3">{{form_gp.other}}</td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  <label for="mm" class="form-label">Заполните также</label>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Показания к выполнению процедуры</td>
+                        <td>{{form_gp.indication_for_procedure}}</td>
+                      </tr>
+                      <tr>
+                        <td>Детали процедуры</td>
+                        <td>{{form_gp.procedural_details}}</td>
+                      </tr>
+                      <tr>
+                        <td>Спецификация</td>
+                        <td>{{form_gp.specification}}</td>
+                      </tr>
+                      <tr>
+                        <td>Наличие особых условий</td>
+                        <td>{{form_gp.special_conditions_present}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </tbody>
+              </table>
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

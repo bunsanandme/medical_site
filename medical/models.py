@@ -113,3 +113,38 @@ class SurgicalHistory(models.Model):
 
     def __str__(self):
         return f"SH #{self.surgical_history_id}"
+
+class GastrointestinalProcedure(models.Model):
+    gastro_procedure_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+        Card,
+        on_delete=models.CASCADE,
+        default=0
+    )
+
+    first_surgeon = models.CharField(max_length=40, default=" ", blank=True)
+    second_surgeon = models.CharField(max_length=40, default=" ", blank=True)
+
+    cholecystectomy = models.CharField(max_length=80, default=" ", blank=True)
+    bariatric = models.CharField(max_length=80, default=" ", blank=True)
+    esophageal = models.CharField(max_length=80, default=" ", blank=True)
+    gastric = models.CharField(max_length=80, default=" ", blank=True)
+    hemicolectomy = models.CharField(max_length=80, default=" ", blank=True)
+    liver_surgery = models.CharField(max_length=80, default=" ", blank=True)
+    hernia_unilateral = models.CharField(max_length=80, default=" ", blank=True)
+    hernia_bilateral = models.CharField(max_length=80, default=" ", blank=True)
+    ventral_hernia = models.CharField(max_length=80, default=" ", blank=True)
+    fundoplication = models.CharField(max_length=80, default=" ", blank=True)
+    sigmoid_resection = models.CharField(max_length=80, default=" ", blank=True)
+    rectal = models.CharField(max_length=80, default=" ", blank=True)
+    esophagus_implants = models.CharField(max_length=80, default=" ", blank=True)
+    linx_implants = models.CharField(max_length=80, default=" ", blank=True)
+    other = models.CharField(max_length=200, default=" ", blank=True)
+
+    indication_for_procedure = models.TextField(default=" ", blank=True)
+    procedural_details = models.TextField(default=" ", blank=True)
+    specification = models.TextField(default=" ", blank=True)
+    special_conditions_present = models.TextField(default=" ", blank=True)
+
+    def __str__(self):
+        return f"GP #{self.gastro_procedure_id}"

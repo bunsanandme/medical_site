@@ -17,6 +17,7 @@ urlpatterns = [
     path("card/edit/<int:card_id>", views.edit_card, name="edit_card"),
     path("mh/edit/<int:card_id>", views.edit_medical_history, name="edit_medical_history"),
     path("sh/edit/<int:card_id>", views.edit_surgical_history, name="edit_surgical_history"),
+    path("gp/edit/<int:card_id>", views.edit_gastro_procedure, name="edit_gastro_procedure"),
 ]
 
 urlpatterns += [
