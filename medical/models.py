@@ -148,3 +148,33 @@ class GastrointestinalProcedure(models.Model):
 
     def __str__(self):
         return f"GP #{self.gastro_procedure_id}"
+
+class UrologicalProcedure(models.Model):
+    uro_procedure_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+        Card,
+        on_delete=models.CASCADE,
+        default=0
+    )
+
+    first_surgeon = models.CharField(max_length=40, default=" ", blank=True)
+    second_surgeon = models.CharField(max_length=40, default=" ", blank=True)
+
+    radical_prostatectomy = models.CharField(max_length=200, default=" ", blank=True)
+    lymph_dissection = models.CharField(max_length=200, default=" ", blank=True)
+    adrenalectomy = models.CharField(max_length=200, default=" ", blank=True)
+    simple_prostatectomy = models.CharField(max_length=200, default=" ", blank=True)
+    partial_nephrectomy = models.CharField(max_length=200, default=" ", blank=True)
+    radical_nephrectomy = models.CharField(max_length=200, default=" ", blank=True)
+    radical_cystectomy  = models.CharField(max_length=200, default=" ", blank=True) 
+    ureter_reimplant  = models.CharField(max_length=200, default=" ", blank=True)
+    pyeloplasty_UPJ = models.CharField(max_length=200, default=" ", blank=True)
+    other = models.CharField(max_length=200, default=" ", blank=True)
+
+    indication_for_procedure = models.TextField(default=" ", blank=True)
+    procedural_details = models.TextField(default=" ", blank=True)
+    specification = models.TextField(default=" ", blank=True)
+    special_conditions_present = models.TextField(default=" ", blank=True)
+
+    def __str__(self):
+        return f"UP #{self.uro_procedure_id}"

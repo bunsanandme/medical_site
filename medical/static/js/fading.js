@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+
     if ($('#smoker option:selected').text() == "Да") {
         $('#packyears').fadeIn(300);
     } 

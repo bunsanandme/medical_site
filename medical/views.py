@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm
+from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm
 from django.contrib.auth.decorators import login_required
-from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure
+from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, F
 
@@ -126,11 +126,13 @@ def show_card(request, card_id):
     form_mh = MedicalHistoryForm(instance=MedicalHistory.objects.get(card_id=card))
     form_sh = SurgicalHistoryForm(instance=SurgicalHistory.objects.get(card_id=card))
     form_gp = GastrointestinalProcedureForm(instance=GastrointestinalProcedure.objects.get(card_id=card))
+    form_up = UrologicalProcedureForm(instance=UrologicalProcedure.objects.get(card_id=card))
     context = {"card": card, 
                 "form_preproc": form_preproc, 
                 "form_mh": form_mh,
                 "form_sh": form_sh,
-                "form_gp": form_gp,}
+                "form_gp": form_gp,
+                "form_up": form_up,}
     return render(request, "pacient_card.html", context)
 
 @login_required
@@ -145,6 +147,8 @@ def add_new_card(request, pacient_id):
     surgical_history.save()
     gastro_procedure = GastrointestinalProcedure(card_id = card)
     gastro_procedure.save()
+    uro_procedure = UrologicalProcedure(card_id = card)
+    uro_procedure.save()
     return redirect(show_card, card.get_id())
 
 @login_required
@@ -210,6 +214,19 @@ def edit_gastro_procedure(request, card_id):
             new_card = form.save(commit=False)
             card = new_card
             card.gastro_procedure_id = GastrointestinalProcedure.objects.get(card_id=Card.objects.get(card_id=card_id)).gastro_procedure_id
+            card.card_id = Card.objects.get(card_id=card_id)
+            card.save()
+        return redirect(show_card, card_id)
+
+@login_required
+def edit_uro_procedure(request, card_id):
+    if "editcard" in request.POST:
+        card = UrologicalProcedure.objects.get(card_id=Card.objects.get(card_id=card_id))
+        form = UrologicalProcedureForm(data=request.POST)
+        if form.is_valid():
+            new_card = form.save(commit=False)
+            card = new_card
+            card.uro_procedure_id =  UrologicalProcedure.objects.get(card_id=Card.objects.get(card_id=card_id)).uro_procedure_id
             card.card_id = Card.objects.get(card_id=card_id)
             card.save()
         return redirect(show_card, card_id)

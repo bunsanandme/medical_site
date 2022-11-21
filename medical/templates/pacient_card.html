@@ -5,9 +5,14 @@
     <div class="pagetitle">
       <h1>Карточка пациента {{card.pacient_id}} </h1>
     </div>
-    <a href="/pacient/{{card.pacient_id.get_id}}"class="btn btn-primary">Назад</a>
-
-    <div class="accordion">
+    <div class="">
+    <nav class="navbar navbar-light bg-light">
+      <form class="form-inline">
+        <a href="/pacient/{{card.pacient_id.get_id}}" class="btn btn-primary">Назад</a>
+        <button class="btn btn-primary" type="button" onclick="$('.collapse').collapse('hide')">Свернуть все</button>
+      </form>
+    </nav>
+    <div class="accordion center-block">
     {% include "preprocedure_form.html" %}
     {% block preprocedure %}
     {% endblock %}
@@ -23,6 +28,11 @@
     {% include "gastrointestinal_procedure_form.html" %}
     {% block gastrointestinal_procedure %}
     {% endblock %}
+
+    {% include "urological_procedure_form.html" %}
+    {% block urological_procedure %}
+    {% endblock %}
+    </div>
     </div>
   </main >
 

@@ -1,0 +1,89 @@
+{% block urological_procedure %}
+
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          Урологическая процедура
+      </button>
+    </h2>
+    <div id="collapseFive" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_uro_procedure" card.get_id %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="mm" class="form-label">Первый хирург</label>
+                {{form_up.first_surgeon}}
+              </div>
+              <div class="mb-3">
+                <label for="mm" class="form-label">Второй хирург</label>
+                {{form_up.second_surgeon}}
+              </div>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Радикальная простатэктомия</td>
+                    <td>{{form_up.radical_prostatectomy}}</td>
+                    <td>Лимфодиссекция</td>
+                    <td>{{form_up.lymph_dissection}}</td>
+                  </tr>
+                  <tr>
+                    <td>Адреналэктомия</td>
+                    <td>{{form_up.adrenalectomy}}</td>
+                    <td>Простая простатэктомия</td>
+                    <td>{{form_up.simple_prostatectomy}}</td>
+                  </tr>
+                  <tr>
+                    <td>Частичная нефрэктомия</td>
+                    <td>{{form_up.partial_nephrectomy}}</td>
+                    <td>Радикальная нефрэктомия</td>
+                    <td>{{form_up.radical_nephrectomy}}</td>
+                  </tr>
+                  <tr>
+                    <td>Радикальная цистэктомия</td>
+                    <td>{{form_up.radical_cystectomy}}</td>
+                    <td>Реимплантат мочеточника</td>
+                    <td>{{form_up.ureter_reimplant}}</td>
+                  </tr>
+                  <tr>
+                    <td>Пиелопластика UPJ</td>
+                    <td>{{form_up.pyeloplasty_UPJ}}</td>
+                    <td>Другое</td>
+                    <td>{{form_up.other}}</td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  <label for="mm" class="form-label">Заполните также</label>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Показания к выполнению процедуры</td>
+                        <td>{{form_up.indication_for_procedure}}</td>
+                      </tr>
+                      <tr>
+                        <td>Детали процедуры</td>
+                        <td>{{form_up.procedural_details}}</td>
+                      </tr>
+                      <tr>
+                        <td>Спецификация</td>
+                        <td>{{form_up.specification}}</td>
+                      </tr>
+                      <tr>
+                        <td>Наличие особых условий</td>
+                        <td>{{form_up.special_conditions_present}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </tbody>
+              </table>
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
