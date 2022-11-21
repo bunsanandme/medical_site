@@ -13,7 +13,7 @@
           <div class="card-body">
             <form method="POST" action="{% url "edit_spd" card.get_id %}">
               {% csrf_token %}
-                <table class="table" style="width: 60%" id = "diseasetable">
+                <table class="table" style="width: 60%">
                     <tbody>
                         <tr>
                           <td>Время начала операции</td>
@@ -44,6 +44,12 @@
                   <label for="date" class="form-label">Высота стола(измерение проводится от пупка пациента), см   </label>
                   {{form_spd.table_height}}
                 </div>
+
+                <div class="mb-3">
+                  <label for="date" class="form-label">Положение пациента</label>
+                  {{form_spd.position}}
+                </div>
+
                 <table>
                   <tbody>
                     <tr>

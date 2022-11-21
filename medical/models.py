@@ -180,6 +180,13 @@ class UrologicalProcedure(models.Model):
         return f"UP #{self.uro_procedure_id}"
 
 class SurgicalProceduralDetail(models.Model):
+    POSITION_CHOICES = (
+        ("Положение лежа на спине", "Положение лежа на спине"),
+        ("Положения лежа на животе", "Положения лежа на животе"),
+        ("Боковое положение", "Боковое положение"),
+        ("Положение с согнутыми ногами","Положение с согнутыми ногами"),
+        ("Положение шезлонга", "Положение шезлонга")
+    )
     surg_proc_detail_id = models.AutoField(primary_key=True)
     card_id = models.OneToOneField(
         Card,
@@ -196,12 +203,7 @@ class SurgicalProceduralDetail(models.Model):
 
     table_height = models.IntegerField(default=0)
 
-    supine_position = models.CharField(max_length=80, default=" ",blank=True)
-    lithotomy_position = models.CharField(max_length=80, default=" ",blank=True)
-    lateral_position = models.CharField(max_length=80, default=" ",blank=True)
-    prone_position = models.CharField(max_length=80, default=" ",blank=True)
-    beach_chair_position = models.CharField(max_length=80, default=" ",blank=True)
-    other = models.CharField(max_length=200, default=" ",blank=True)
+    position = models.CharField(max_length=80, choices=POSITION_CHOICES, default="Положение лежа на спине",blank=True)
 
     indication_for_procedure = models.TextField(default=" ", blank=True)
     procedural_details = models.TextField(default=" ", blank=True)
