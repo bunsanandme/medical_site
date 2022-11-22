@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, widgets
 from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail
-
+from datetime import datetime
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control"}))
@@ -16,6 +16,13 @@ class PacientForm(ModelForm):
             'date_birth': widgets.DateInput(attrs={'type': 'date',
                                                    "style": "width: 200px"})
         }
+
+    def clean_date_birth(self):
+        date_birth = self.cleaned_data['date_birth']
+        print(type(date_birth))
+        if date_birth >= datetime.now().date():
+            raise forms.ValidationError('Дата рождения не может быть позже сегодняшней даты')
+        return date_birth
 
 class SearchForm(forms.Form):
     search_input = forms.CharField(widget=forms.TextInput(attrs={"type":"text", 

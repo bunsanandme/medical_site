@@ -30,18 +30,12 @@ def home(request):
     amount_pacient = Pacient.objects.all()
     return render(request, "admin_panel.html", {"amount_pacient": len(amount_pacient)})
 
-
-
-def home_unauth(request):
-    amount_pacient = Pacient.objects.all()
-    return render(request, "admin_panel_unauth.html", {"amount_pacient": len(amount_pacient)})
-
 @login_required
 def show_pacient(request, pacient_id):
         pacient = get_object_or_404(Pacient, pacient_id=pacient_id)
         form = PacientForm(instance=pacient)
         cards = Card.objects.filter(pacient_id=pacient)
-        return render(request, 'pacient.html', {'pacient': pacient, 'form': form, "cards": cards})
+        return render(request, 'pacient.html', {'pacient': pacient, 'form': form, "cards": cards, })
 
 
 @login_required
@@ -54,11 +48,16 @@ def add_pacient(request):
             pacient.save()
             new_form = PacientForm(data=pacient)
             return redirect(f'/pacient/{pacient.pacient_id}', {'pacient': pacient})
+        else:
+            print(form.errors.as_text())
+            return render(request,
+                  'add_pacient.html',
+                    {"form": form})
     else:
         form = PacientForm()
     return render(request,
                   'add_pacient.html',
-                 {"form": form})
+                    {"form": form})
 
 @login_required
 def action_with_pacient(request, pacient_id):

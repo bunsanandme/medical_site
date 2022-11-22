@@ -10,6 +10,14 @@
           <div class="card-body">
             <form method="POST" action=".">
               {% csrf_token %}
+              {%  if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                  Возникли ошибки при заполнении:
+                  {% for key, value in form.errors.items%}
+                    <p>{{value}}</p>
+                </div>
+                {% endfor %}
+              {% endif %}
               <div class="mb-3">
                 <b><label for="exampleInputEmail1" class="form-label">Имя</label></b>
                 <p>{{form.name}}</p>
