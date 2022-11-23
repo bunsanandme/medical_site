@@ -1,0 +1,102 @@
+{% block instruments_used %}
+
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+          Используемые инструменты
+      </button>
+    </h2>
+    <div id="collapseEleven" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_iu" card.get_id %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="mm" class="form-label">Диаметр</label>
+                {{form_iu.diameter}}
+              </div>
+              <div class="mb-3">
+                <label for="mm" class="form-label">Измерение</label>
+                {{form_iu.dimension}}
+              </div>
+              <div class="mb-3">
+                <label for="mm" class="form-label">Оптический угол</label>
+                {{form_iu.optic_degree}}
+              </div>
+              <div class="mb-3">
+                <label for="mm" class="form-label">Производитель</label>
+                {{form_iu.manufacturer}}
+              </div>
+              <table class="table border">
+                <thead>
+                  <tr>
+                    <td>Группа</td>
+                    <td>Имя/описание</td>
+                    <td>Серийный номер</td>
+                    <td> Использован</td>
+                  </tr>
+                </thead>
+                  <tr>
+                    <td rowspan=4><b>Passive 
+                      Instruments 
+                      (Ø 3 mm)</b> </td>
+                      <td>Atraumatic Single Action, Long<br> 
+                        (Ø 3 mm, length 280 mm) </td>
+                      <td>X0007203</td>
+                      <td>{{form_iu.table_pi1_3}}</td>
+                  </tr>
+                  <tr>
+                      <td>Cobra Grasper, Long 
+                          (Ø 3 mm, length 280 mm) </td>
+                      <td>X0007206</td>
+                      <td>{{form_iu.table_pi2_3}}</td>
+                  </tr>
+                  <tr>
+                      <td>DeBakey, Long 
+                        (Ø 3 mm, length 280 mm) </td>
+                      <td>X0007218</td>
+                      <td>{{form_iu.table_pi3_3}}</td>
+                  </tr>
+                  <tr>
+                    <td>Needle Holder, Long 
+                      (Ø 3 mm, length 280 mm) </td>
+                    <td>X0007209</td>
+                    <td>{{form_iu.table_pi4_3}}</td>
+                </tr>
+
+                <tr>
+                  <td rowspan=4><b>Monopolar 
+                    Instruments 
+                    (Ø 3 mm)</b> </td>
+                    <td>Monopolar Maryland Dissector, Long 
+                      (Ø 3 mm, length 280 mm) </td>
+                    <td>X0007212</td>
+                    <td>{{form_iu.table_mi1_3}}</td>
+                </tr>
+                <tr>
+                    <td>Monopolar Curved Metzenbaum Scissors, Long 
+                      (Ø 3 mm, length 280 mm) </td>
+                    <td>X0007215 </td>
+                    <td>{{form_iu.table_mi1_3}}</td>
+                </tr>
+                <tr>
+                    <td>Monopolar L-Hook Electrode, Long 
+                      (Ø 3 mm, length 280 mm) </td>
+                    <td>X0007221</td>
+                    <td>{{form_iu.table_mi1_3}}</td>
+                </tr>
+                  <tbody>
+                  </tbody>
+                  
+              </table>
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

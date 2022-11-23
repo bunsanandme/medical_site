@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, widgets
-from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation, BloodLoss, RobotMalfunction
+from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation, BloodLoss, RobotMalfunction, InstrumentUsed
 from datetime import datetime
 from zoneinfo import ZoneInfo
 class LoginForm(forms.Form):
@@ -160,5 +160,11 @@ class BloodLossForm(ModelForm):
 class RobotMalfunctionForm(ModelForm):
     class Meta:
         model = RobotMalfunction
+        fields = "__all__"
+        exclude = ("card_id",)
+
+class InstrumentsUsedForm(ModelForm):
+    class Meta:
+        model = InstrumentUsed
         fields = "__all__"
         exclude = ("card_id",)

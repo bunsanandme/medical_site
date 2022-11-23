@@ -323,3 +323,109 @@ class RobotMalfunction(models.Model):
     comment = models.TextField(default=" ", blank=True)
     def __str__(self):
         return f"RB #{self.rob_mal_id}"
+
+
+class InstrumentUsed(models.Model):
+    inst_use_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+        Card,
+        on_delete=models.CASCADE,
+        default=0
+    )
+
+    DIAMETER_CHOICES = (
+        ("5mm", "5mm"),
+        ("10mm", "10mm")
+    )
+
+    DIMENSION_CHOICES = (
+        ("2D", "2D"),
+        ("3D", "3D"),
+        ("4D", "4D"),
+    )
+
+    OPTIC_DEGREE_CHOICES = (
+        ("0°", "0°"),
+        ("30°", "30°")
+    )
+
+    MANUFACTURER_CHOICES = (
+        ("Conmed","Conmed"),
+        ("NovaDAQ", "NovaDAQ"),
+        ("Wolf","Wolf"),
+        ("Stryker","Stryker"),
+        ("Storz","Storz"),
+        ("Olympus", "Olympus")
+    )
+
+    diameter = models.CharField(max_length=4, default=" ", choices=DIAMETER_CHOICES, blank=True)
+    dimension = models.CharField(max_length=2, default=" ", choices=DIMENSION_CHOICES, blank=True)
+    optic_degree = models.CharField(max_length=10, default=" ", choices= OPTIC_DEGREE_CHOICES, blank=True)
+    manufacturer = models.CharField(max_length=10, default=" ", choices=MANUFACTURER_CHOICES, blank=True)
+
+    table_pi1_3 = models.BooleanField(default=False, blank=True)
+    table_pi2_3 = models.BooleanField(default=False, blank=True, )
+    table_pi3_3 = models.BooleanField(default=False, blank=True, )
+    table_pi4_3 = models.BooleanField(default=False, blank=True, )
+
+    table_mi1_3 = models.BooleanField(default=False, blank=True, )
+    table_mi2_3 = models.BooleanField(default=False, blank=True, )
+    table_mi3_3 = models.BooleanField(default=False, blank=True, )
+
+    table_bi1_3 = models.BooleanField(default=False, blank=True, )
+    table_bi2_3 = models.BooleanField(default=False, blank=True, )
+    
+    table_pi1_5 = models.BooleanField(default=False, blank=True, )
+    table_pi2_5 = models.BooleanField(default=False, blank=True, )
+    table_pi3_5 = models.BooleanField(default=False, blank=True, )
+    table_pi4_5 = models.BooleanField(default=False, blank=True, )
+    table_pi5_5 = models.BooleanField(default=False, blank=True, )
+    table_pi6_5 = models.BooleanField(default=False, blank=True, )
+    table_pi7_5 = models.BooleanField(default=False, blank=True, )
+    table_pi8_5 = models.BooleanField(default=False, blank=True, )
+    table_pi9_5 = models.BooleanField(default=False, blank=True, )
+    table_pi10_5 = models.BooleanField(default=False, blank=True, )
+    table_pi10_5 = models.BooleanField(default=False, blank=True, )
+    table_pi11_5 = models.BooleanField(default=False, blank=True, )
+    table_pi12_5 = models.BooleanField(default=False, blank=True, )
+    table_pi13_5 = models.BooleanField(default=False, blank=True, )
+    table_pi14_5 = models.BooleanField(default=False, blank=True, )
+    table_pi15_5 = models.BooleanField(default=False, blank=True, )
+    table_pi16_5 = models.BooleanField(default=False, blank=True, )
+    table_pi17_5 = models.BooleanField(default=False, blank=True, )
+
+    table_mi1_5 = models.BooleanField(default=False, blank=True, )
+    table_mi2_5 = models.BooleanField(default=False, blank=True, )
+    table_mi3_5 = models.BooleanField(default=False, blank=True, )
+    table_mi4_5 = models.BooleanField(default=False, blank=True, )
+    table_mi5_5 = models.BooleanField(default=False, blank=True, )
+    table_mi6_5 = models.BooleanField(default=False, blank=True, )
+    table_mi7_5 = models.BooleanField(default=False, blank=True, )
+    table_mi8_5 = models.BooleanField(default=False, blank=True, )
+
+    table_bi1_5 = models.BooleanField(default=False, blank=True, )
+    table_bi2_5 = models.BooleanField(default=False, blank=True, )
+    table_bi3_5 = models.BooleanField(default=False, blank=True, )
+    table_bi4_5 = models.BooleanField(default=False, blank=True, )
+    table_bi5_5 = models.BooleanField(default=False, blank=True, )
+
+    table_pi1_10 = models.BooleanField(default=False, blank=True, )
+    table_pi2_10 = models.BooleanField(default=False, blank=True, )
+
+    table_ca1 = models.BooleanField(default=False, blank=True, )
+    table_ca1 = models.BooleanField(default=False, blank=True, )
+    table_ca1 = models.BooleanField(default=False, blank=True, )
+    table_ca1 = models.BooleanField(default=False, blank=True, )
+
+    table_us = models.BooleanField(default=False, blank=True, )
+
+    table_ai1 = models.BooleanField(default=False, blank=True, )
+    table_ai2 = models.BooleanField(default=False, blank=True, )
+    table_ai3 = models.BooleanField(default=False, blank=True, )
+    table_ai4 = models.BooleanField(default=False, blank=True, )
+
+    table_rad1 = models.BooleanField(default=False, blank=True, )
+    table_rad2 = models.BooleanField(default=False, blank=True, )
+    table_rad3 = models.BooleanField(default=False, blank=True, )
+    def __str__(self):
+        return f"UI #{self.inst_use_id}"

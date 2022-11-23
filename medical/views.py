@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm, SurgicalProceduralDetailForm, RoboticArmLocationForm, TrocardLocationForm, BloodLossForm, RobotMalfunctionForm
+from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm, SurgicalProceduralDetailForm, RoboticArmLocationForm, TrocardLocationForm, BloodLossForm, RobotMalfunctionForm, InstrumentsUsedForm
 from django.contrib.auth.decorators import login_required
-from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation, BloodLoss, RobotMalfunction
+from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation, BloodLoss, RobotMalfunction, InstrumentUsed
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, F
 
@@ -140,7 +140,8 @@ def show_card(request, card_id):
     form_tl = TrocardLocationForm(instance=TrocardLocation.objects.get(card_id=card)),
     form_bl = BloodLossForm(instance=BloodLoss.objects.get(card_id=card))
     form_rm = RobotMalfunctionForm(instance=RobotMalfunction.objects.get(card_id=card))
-    
+    form_iu = InstrumentsUsedForm(instance=InstrumentUsed.objects.get(card_id=card))
+    InstrumentUsed
     context = {"card": card, 
                 "form_preproc": form_preproc, 
                 "form_mh": form_mh,
@@ -151,7 +152,8 @@ def show_card(request, card_id):
                 "form_ral": form_ral,
                 "form_tl": form_tl,
                 "form_bl": form_bl,
-                "form_rm": form_rm,}
+                "form_rm": form_rm,
+                "form_iu": form_iu,}
     return render(request, "pacient_card.html", context)
 
 @login_required
@@ -178,6 +180,8 @@ def add_new_card(request, pacient_id):
     blood_loss.save()
     robot_malf = RobotMalfunction(card_id = card)
     robot_malf.save()
+    inst_used = InstrumentUsed(card_id = card)
+    inst_used.save()
     return redirect(show_card, card.get_id())
 
 @login_required
@@ -319,6 +323,20 @@ def edit_rm(request, card_id):
                 new_card = form.save(commit=False)
                 card = new_card
                 card.rob_mal_id = RobotMalfunction.objects.get(card_id=Card.objects.get(card_id=card_id)).rob_mal_id
+                card.card_id = Card.objects.get(card_id=card_id)
+                card.save()
+            return redirect(show_card, card_id)
+
+@login_required
+def edit_iu(request, card_id):
+    if "editcard" in request.POST: 
+            card = InstrumentUsed.objects.get(card_id=Card.objects.get(card_id=card_id))
+            form = InstrumentsUsedForm(data=request.POST)
+            print(form.errors)
+            if form.is_valid():
+                new_card = form.save(commit=False)
+                card = new_card
+                card.inst_use_id = InstrumentUsed.objects.get(card_id=Card.objects.get(card_id=card_id)).inst_use_id
                 card.card_id = Card.objects.get(card_id=card_id)
                 card.save()
             return redirect(show_card, card_id)
