@@ -14,17 +14,20 @@
             <form method="POST" action="{% url "delete" pacient.get_id %}">
               {% csrf_token %}
               {%  if form.errors %}
-              <div class="alert alert-danger" role="alert">
-                {{form.errors.as_text}}
-              </div>
+                <div class="alert alert-danger" role="alert">
+                  Возникли ошибки при заполнении:
+                  {% for key, value in form.errors.items%}
+                    <p>{{value}}</p>
+                </div>
+                {% endfor %}
               {% endif %}
               <div class="mb-3">
                 <b><label class="form-label">Имя</label></b>
-                <p>{{form.name}}</p>
+                {{form.name}}
               </div>
               <div class="mb-3">
                 <b><label class="form-label">Фамилия</label></b>
-                <p>{{form.surname}}</p>
+                {{form.surname}}
               </div>
               <div class="mb-3">
                 <b><label class="form-label">Пол</label></b>
@@ -73,15 +76,19 @@
               <th> </th>
               <th> </th>
             </tr>
-            {% for card in cards %}
-            <tr>
-              <td>{{card.card_id}}</td>
-              <td>{{card.creation_date|date:"SHORT_DATE_FORMAT"}}</td>
-              <td>{{card.admission_date|date:"SHORT_DATE_FORMAT"}}</td>
-              <td>{{card.sign_date|date:"SHORT_DATE_FORMAT"}}</td>
-              <td><a href="{% url "show_card" card.get_id %}" class="btn btn-primary">Показать</a></td>
-            </tr>
-            {% endfor %}
+            {% if not cards %}
+              <td colspan="5" align="center" style="height:125%"><b>У пациента нет приемов</b></td>
+            {% else %}
+              {% for card in cards %}
+              <tr>
+                <td>{{card.card_id}}</td>
+                <td>{{card.creation_date|date:"SHORT_DATE_FORMAT"}}</td>
+                <td>{{card.admission_date|date:"SHORT_DATE_FORMAT"}}</td>
+                <td>{{card.sign_date|date:"SHORT_DATE_FORMAT"}}</td>
+                <td><a href="{% url "show_card" card.get_id %}" class="btn btn-primary">Показать</a></td>
+              </tr>
+              {% endfor %}
+            {% endif %}
             </table>
 
 

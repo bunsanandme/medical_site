@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm, SurgicalProceduralDetailForm, RoboticArmLocationForm, TrocardLocationForm
+from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm, SurgicalProceduralDetailForm, RoboticArmLocationForm, TrocardLocationForm, BloodLossForm
 from django.contrib.auth.decorators import login_required
-from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation
+from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation, BloodLoss
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, F
 
@@ -61,24 +61,26 @@ def add_pacient(request):
 
 @login_required
 def action_with_pacient(request, pacient_id):
-    if "deletepacient" in request.POST:
+    if request.method == 'POST':
         pacient = Pacient.objects.get(pacient_id=pacient_id)
         cards = Card.objects.filter(pacient_id=pacient_id)
-        cards.delete()
-        pacient.delete()
-        return redirect("/pacient/all")
-    else:
-        form = PacientForm(data=request.POST)
-        if form.is_valid():
-            pacient = Pacient.objects.get(pacient_id=pacient_id)
-            new_pacient = form.save(commit=False)
-            pacient.name=new_pacient.name
-            pacient.surname=new_pacient.surname
-            pacient.date_birth=new_pacient.date_birth
-            pacient.gender=new_pacient.gender
-            pacient.save()
-            cards = Card.objects.filter(pacient_id=pacient_id)
-        return redirect(f'/pacient/{pacient.pacient_id}', {'pacient': pacient, "cards": cards})
+        if "deletepacient" in request.POST:
+            cards.delete()
+            pacient.delete()
+            return redirect("/pacient/all")
+        else:
+            form = PacientForm(data=request.POST)
+            if form.is_valid():
+                new_pacient = form.save(commit=False)
+                pacient.name = new_pacient.name
+                pacient.surname = new_pacient.surname
+                pacient.date_birth = new_pacient.date_birth
+                pacient.gender = new_pacient.gender
+                pacient.save()
+                cards = Card.objects.filter(pacient_id=pacient_id)
+            else:
+                return render(request, 'pacient.html', {'pacient': pacient, 'form': form, "cards": cards, })
+    return redirect(f'/pacient/{pacient.pacient_id}', {'pacient': pacient, "cards": cards})
 
 @login_required
 def edit_pacient(request, pacient_id):
@@ -109,8 +111,10 @@ def search_pacient(request):
         if query == '':
              pacients = Pacient.objects.all()
         else:
-            Pacient.objects.annotate(fullname=(F("name")+F("surname")))
-            pacients = Pacient.objects.filter(Q(name__icontains=query) | Q(surname__icontains=query))
+            if not query.isdigit():
+                pacients = Pacient.objects.filter(Q(name__icontains=query) | Q(surname__icontains=query))
+            else:
+                pacients = Pacient.objects.filter(Q(pacient_id__contains=int(query)))
         paginator = Paginator(pacients, 4)
         page = request.GET.get('page')
         try:
@@ -133,7 +137,8 @@ def show_card(request, card_id):
     form_up = UrologicalProcedureForm(instance=UrologicalProcedure.objects.get(card_id=card))
     form_spd = SurgicalProceduralDetailForm(instance=SurgicalProceduralDetail.objects.get(card_id=card))
     form_ral = RoboticArmLocationForm(instance=RoboticArmLocation.objects.get(card_id=card))
-    form_tl = TrocardLocationForm(instance=TrocardLocation.objects.get(card_id=card))
+    form_tl = TrocardLocationForm(instance=TrocardLocation.objects.get(card_id=card)),
+    form_bl = BloodLossForm(instance=BloodLoss.objects.get(card_id=card))
     context = {"card": card, 
                 "form_preproc": form_preproc, 
                 "form_mh": form_mh,
@@ -142,7 +147,8 @@ def show_card(request, card_id):
                 "form_up": form_up,
                 "form_spd": form_spd,
                 "form_ral": form_ral,
-                "form_tl": form_tl,}
+                "form_tl": form_tl,
+                "form_bl": form_bl,}
     return render(request, "pacient_card.html", context)
 
 @login_required
@@ -165,6 +171,8 @@ def add_new_card(request, pacient_id):
     rob_arm_location.save()
     trocard_location = TrocardLocation(card_id = card)
     trocard_location.save()
+    blood_loss = BloodLoss(card_id = card)
+    blood_loss.save()
     return redirect(show_card, card.get_id())
 
 @login_required
@@ -172,6 +180,7 @@ def edit_card(request, card_id):
     if "editcard" in request.POST:
         card = PreprocedureCard.objects.get(card_id=Card.objects.get(card_id=card_id))
         form = PreprocedureCardForm(data=request.POST)
+        print(form.errors)
         if form.is_valid():
             new_card = form.save(commit=False)
             card.creation_date = new_card.creation_date
@@ -182,9 +191,12 @@ def edit_card(request, card_id):
             card.height = new_card.height
             card.weight = new_card.weight
             card.save()
-        card = Card.objects.get(card_id=card_id)
-        form = PreprocedureCardForm(instance=card)
-        return redirect(show_card, card.get_id())
+            card = Card.objects.get(card_id=card_id)
+            form = PreprocedureCardForm(instance=card)
+            return redirect(show_card, card.get_id())
+        else:
+            card = Card.objects.get(card_id=card_id)
+            return redirect(show_card, card.get_id())
 
 @login_required
 def edit_medical_history(request, card_id):
@@ -274,6 +286,20 @@ def edit_tl(request, card_id):
                 new_card = form.save(commit=False)
                 card = new_card
                 card.trocard_location_id = TrocardLocation.objects.get(card_id=Card.objects.get(card_id=card_id)).trocard_location_id
+                card.card_id = Card.objects.get(card_id=card_id)
+                card.save()
+            return redirect(show_card, card_id)
+
+@login_required
+def edit_bl(request, card_id):
+    if "editcard" in request.POST: 
+            card = BloodLoss.objects.get(card_id=Card.objects.get(card_id=card_id))
+            form = BloodLossForm(data=request.POST)
+            print(form.errors)
+            if form.is_valid():
+                new_card = form.save(commit=False)
+                card = new_card
+                card.blood_loss_id = BloodLoss.objects.get(card_id=Card.objects.get(card_id=card_id)).blood_loss_id
                 card.card_id = Card.objects.get(card_id=card_id)
                 card.save()
             return redirect(show_card, card_id)

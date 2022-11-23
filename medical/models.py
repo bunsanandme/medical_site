@@ -281,3 +281,25 @@ class TrocardLocation(models.Model):
 
     def __str__(self):
         return f"TL #{self.trocard_location_id}"
+
+
+class BloodLoss(models.Model):
+    blood_loss_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+        Card,
+        on_delete=models.CASCADE,
+        default=0
+    )
+
+    blood_loss = models.IntegerField(default=0, validators=[MaxValueValidator(4500)])
+    undergo_conversion_lap = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
+    conversion_reason_lap = models.TextField(default=" ", blank=True)
+
+    undergo_conversion_open = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
+    conversion_reason_open = models.TextField(default=" ", blank=True)
+
+    temporary_conversion = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
+
+    end_by_robot = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
+    def __str__(self):
+        return f"BL #{self.blood_loss_id}"

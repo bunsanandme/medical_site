@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import ModelForm, widgets
-from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation
+from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation, BloodLoss
 from datetime import datetime
+from zoneinfo import ZoneInfo
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control"}))
@@ -43,7 +44,8 @@ class PreprocedureCardForm(ModelForm):
         widgets = {
             'creation_date': widgets.DateInput(attrs={"class": "form-control",
                                                    "type": "date",
-                                                   "style": "width: 200px"}),
+                                                   "style": "width: 200px",
+                                                   "required": True}),
             'admission_date': widgets.DateTimeInput(attrs={"class": "form-control",
                                                    "type": "datetime-local",
                                                    "style": "width: 200px"}),
@@ -56,9 +58,22 @@ class PreprocedureCardForm(ModelForm):
             "packyears": forms.TextInput(attrs={"class": "form-control",
                                                 "id": "packyears",
                                                 "style": "width: 100px",}),
-            "height":  forms.NumberInput(attrs={"class": "form-control", "style": "width: 100px",}),
+            "height":  forms.NumberInput(attrs={"class": "form-control", "style": "width: 100px", "id": "height"}),
             "weight":  forms.NumberInput(attrs={"class": "form-control", "style": "width: 100px",}),                               
             }
+    
+    def clean_creation_date(self):
+        creation_date = self.cleaned_data['creation_date']
+        print(type(creation_date))
+        if creation_date >= datetime.now(tz=ZoneInfo("Europe/Moscow")):
+            raise forms.ValidationError('Дата создания записи не может быть позже сегодняшней даты')
+        return creation_date
+
+    def clean_admission_date(self):
+        admission_date = self.cleaned_data['admission_date']
+        if admission_date >= datetime.now(tz=ZoneInfo("Europe/Moscow")):
+            raise forms.ValidationError('Дата приема записи не может быть позже сегодняшней даты')
+        return admission_date
 
 class MedicalHistoryForm(ModelForm):
     class Meta:
@@ -133,5 +148,11 @@ class RoboticArmLocationForm(ModelForm):
 class TrocardLocationForm(ModelForm):
     class Meta:
         model = TrocardLocation
+        fields = "__all__"
+        exclude = ("card_id",)
+
+class BloodLossForm(ModelForm):
+    class Meta:
+        model = BloodLoss
         fields = "__all__"
         exclude = ("card_id",)

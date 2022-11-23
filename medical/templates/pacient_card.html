@@ -13,6 +13,16 @@
       </form>
     </nav>
     <div class="accordion center-block">
+      
+    {% if form_preproc.errors %}
+      <div class="alert alert-danger" role="alert">
+        Возникли ошибки при заполнении:
+        {% for key, value in formerrors.items%}
+          <p>{{value}}</p>
+      </div>
+      {% endfor %}
+    {% endif %}
+
     {% include "preprocedure_form.html" %}
     {% block preprocedure %}
     {% endblock %}
@@ -40,10 +50,13 @@
     {% include "robotic_arm_location_form.html" %}
     {% block robotic_arm_location %}
     {% endblock %}
-
     
     {% include "trocard_location_form.html" %}
     {% block trocard_location %}
+    {% endblock %}
+
+    {% include "blood_loss_form.html" %}
+    {% block blood_loss %}
     {% endblock %}
     </div>
     </div>
@@ -52,4 +65,5 @@
 
   <script src="{% static "js/jquery.min.js" %}"></script>
   <script src="{% static "js/fading.js" %}"></script>
+  <script src="{% static "js/validate.js" %}"></script>
 {% endblock %}

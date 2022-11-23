@@ -1,0 +1,53 @@
+{% block blood_loss %}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine" >
+        Потеря крови/Незапланированные переходы
+      </button>
+    </h2>
+    <div id="collapseNine" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_bl" card.get_id %}">
+              {% csrf_token %}
+              
+              <div class="mb-3">
+                <label class="form-label">Потеря крови (мл)</label>
+                {{form_bl.blood_loss}}
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Был ли пациент переведен на операцию на коленях/открытую операцию?</label>
+                {{form_bl.undergo_conversion_lap}}
+              </div>
+                <div class="mb-3">
+                    <label class="form-label">Укажите причину конвертации</label>
+              {{form_bl.conversion_reason_lab}}
+              </div>
+                <div class="mb-3">
+                    <label class="form-label">Пришлось ли пациенту переходить на открытую операцию?</label>
+              {{form_bl.undergo_conversion_open}}
+              </div>
+                <div class="mb-3">
+                    <label class="form-label">Укажите причину конвертации</label>
+              {{form_bl.conversion_reason_open}}
+              </div>
+                <div class="mb-3">
+                    <label class="form-label">Временный переход</label>
+              {{form_bl.temporary_conversion}}
+              </div>
+                <div class="mb-3">
+                    <label class="form-label">Закончена роботом?</label>
+              {{form_bl.end_by_robot}}
+                    </div>
+
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

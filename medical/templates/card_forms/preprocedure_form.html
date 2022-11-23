@@ -1,4 +1,6 @@
 {% block preprocedure %}
+
+
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" >
@@ -10,14 +12,16 @@
         <div class="card">
           <h5 class="card-title"></h5>
           <div class="card-body">
-            <form method="POST" action="{% url "edit_card" card.get_id %}">
+            <form method="POST" id="form_preproc" action="{% url "edit_card" card.get_id %}">
               {% csrf_token %}
-
               <div class="form-group row ">
                 <div class="form-group col-md-4">
                   <div class="mb-3">
                     <label class="form-label">Дата создания приема</label>
                     {{form_preproc.creation_date}}
+                    <div class="invalid-feedback">
+                      Неверная дата
+                    </div>
                   </div>
                 </div>
                 
