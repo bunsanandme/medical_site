@@ -302,4 +302,24 @@ class BloodLoss(models.Model):
 
     end_by_robot = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
     def __str__(self):
-        return f"BL #{self.blood_loss_id}"
+        return f"BL #{self.blood_loss_id}"\
+
+class RobotMalfunction(models.Model):
+    rob_mal_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+    Card,
+    on_delete=models.CASCADE,
+    default=0)
+
+    MALFUNCTION_CHOISE = (
+        ("Неисправность консоли","Неисправность консоли"),
+        ("Неисправность монитора/камеры","Неисправность монитора/камеры"),
+        ("Ограниченное движение","Ограниченное движение"),
+        ("Столкновение","Столкновение"),
+        ("Другое","Другое")
+    )
+
+    malfunction = models.CharField(max_length=50, default=" ", choices=MALFUNCTION_CHOISE, blank=True)
+    comment = models.TextField(default=" ", blank=True)
+    def __str__(self):
+        return f"RB #{self.rob_mal_id}"

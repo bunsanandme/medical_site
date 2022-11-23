@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm, SurgicalProceduralDetailForm, RoboticArmLocationForm, TrocardLocationForm, BloodLossForm
+from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm, SurgicalProceduralDetailForm, RoboticArmLocationForm, TrocardLocationForm, BloodLossForm, RobotMalfunctionForm
 from django.contrib.auth.decorators import login_required
-from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation, BloodLoss
+from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation, BloodLoss, RobotMalfunction
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, F
 
@@ -139,6 +139,8 @@ def show_card(request, card_id):
     form_ral = RoboticArmLocationForm(instance=RoboticArmLocation.objects.get(card_id=card))
     form_tl = TrocardLocationForm(instance=TrocardLocation.objects.get(card_id=card)),
     form_bl = BloodLossForm(instance=BloodLoss.objects.get(card_id=card))
+    form_rm = RobotMalfunctionForm(instance=RobotMalfunction.objects.get(card_id=card))
+    
     context = {"card": card, 
                 "form_preproc": form_preproc, 
                 "form_mh": form_mh,
@@ -148,7 +150,8 @@ def show_card(request, card_id):
                 "form_spd": form_spd,
                 "form_ral": form_ral,
                 "form_tl": form_tl,
-                "form_bl": form_bl,}
+                "form_bl": form_bl,
+                "form_rm": form_rm,}
     return render(request, "pacient_card.html", context)
 
 @login_required
@@ -173,6 +176,8 @@ def add_new_card(request, pacient_id):
     trocard_location.save()
     blood_loss = BloodLoss(card_id = card)
     blood_loss.save()
+    robot_malf = RobotMalfunction(card_id = card)
+    robot_malf.save()
     return redirect(show_card, card.get_id())
 
 @login_required
@@ -206,7 +211,7 @@ def edit_medical_history(request, card_id):
         if form.is_valid():
             new_card = form.save(commit=False)
             card = new_card
-            card.medical_history_id = MedicalHistory.objects.get(card_id=Card.objects.get(card_id=card_id)).medical_history_id
+            card.history_card_id = MedicalHistory.objects.get(card_id=Card.objects.get(card_id=card_id)).history_card_id
             card.card_id = Card.objects.get(card_id=card_id)
             card.save()
         return redirect(show_card, card_id)
@@ -300,6 +305,20 @@ def edit_bl(request, card_id):
                 new_card = form.save(commit=False)
                 card = new_card
                 card.blood_loss_id = BloodLoss.objects.get(card_id=Card.objects.get(card_id=card_id)).blood_loss_id
+                card.card_id = Card.objects.get(card_id=card_id)
+                card.save()
+            return redirect(show_card, card_id)
+
+@login_required
+def edit_rm(request, card_id):
+    if "editcard" in request.POST: 
+            card = RobotMalfunction.objects.get(card_id=Card.objects.get(card_id=card_id))
+            form = RobotMalfunctionForm(data=request.POST)
+            print(form.errors)
+            if form.is_valid():
+                new_card = form.save(commit=False)
+                card = new_card
+                card.rob_mal_id = RobotMalfunction.objects.get(card_id=Card.objects.get(card_id=card_id)).rob_mal_id
                 card.card_id = Card.objects.get(card_id=card_id)
                 card.save()
             return redirect(show_card, card_id)

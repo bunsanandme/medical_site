@@ -23,6 +23,7 @@ urlpatterns = [
     path("ral/edit/<int:card_id>", views.edit_ral, name="edit_ral"),
     path("tl/edit/<int:card_id>", views.edit_tl, name="edit_tl"),
     path("bl/edit/<int:card_id>", views.edit_bl, name="edit_bl"),
+    path("rm/edit/<int:card_id>", views.edit_rm, name="edit_rm"),
 ]
 
 urlpatterns += [ 

@@ -1,11 +1,11 @@
 jQuery(function($) {
     $('#form_preproc').on('submit', function(event) {
-      if ( validateForm() ) {
+      if ( validateForm_preproc() ) {
         event.preventDefault();
       }
     
 
-    function validateForm() {
+    function validateForm_preproc() {
         $("#error").remove();
         let error_string = "";
         let now = new Date().valueOf();
@@ -40,7 +40,6 @@ jQuery(function($) {
             error_string += '<li> Неверное значение поля "Вес" </li>';
         }
 
-        console.log( ) 
         if ($('#smoker option:selected').text() == "Да" && $('#packyears').children().last().val() == 0 ) {
             var v_smoker = true;
             error_string += '<li> Стаж курения должен быть больше нуля </li>'
@@ -53,7 +52,29 @@ jQuery(function($) {
                 error_string + 
                 '</ul></div>');
         }
-        return v_height;
+        return validate;
+    }
+  });
+  $('#form_mh').on('submit', function(event) {
+    if ( validateForm_mh() ) {
+      event.preventDefault();
+    }
+
+    function validateForm_mh() {
+      $("#error").remove();
+      let error_string = "";
+      if ($('#id_relevant_disease option:selected').text() == "Да" && !Boolean($('input[type="checkbox"]').is(':checked'))) {
+        var v_rd = true;
+        error_string += '<li> Не отмечено хотя бы одной болезни </li>';
+    }
+    let validate = v_rd;
+    if (validate) {
+      $("#form_mh").before(
+          '<div class="alert alert-danger" role="alert" id="error">Возникли ошибки при заполнении:<ul>' + 
+          error_string + 
+          '</ul></div>');
+    }
+    return validate;
     }
 
 });
