@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Pacient, PreprocedureCard, MedicalHistory, Card, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation
+from .models import Pacient, PreprocedureCard, MedicalHistory, Card, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation,TrocardLocation
 
 admin.site.register(Pacient)
 admin.site.register(PreprocedureCard)
@@ -10,3 +10,4 @@ admin.site.register(GastrointestinalProcedure)
 admin.site.register(UrologicalProcedure)
 admin.site.register(SurgicalProceduralDetail)
 admin.site.register(RoboticArmLocation)
+admin.site.register(TrocardLocation)

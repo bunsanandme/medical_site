@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, widgets
-from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation
+from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation
 from datetime import datetime
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -41,14 +41,23 @@ class PreprocedureCardForm(ModelForm):
         model = PreprocedureCard
         fields = ("creation_date", "admission_date", "sign_date", "is_smoker", "packyears", "height", "weight")
         widgets = {
-            'admission_date': widgets.DateTimeInput(attrs={"type": "datetime-local",
-                                                   "style": "width: 220px"}),
-            'sign_date': widgets.DateInput(attrs={"type": "date",
+            'creation_date': widgets.DateInput(attrs={"class": "form-control",
+                                                   "type": "date",
+                                                   "style": "width: 200px"}),
+            'admission_date': widgets.DateTimeInput(attrs={"class": "form-control",
+                                                   "type": "datetime-local",
+                                                   "style": "width: 200px"}),
+            'sign_date': widgets.DateInput(attrs={"class": "form-control",
+                                                   "type": "date",
                                                    "style": "width: 200px"}),
             "is_smoker":   forms.Select(attrs={"class": "form-select",
                                             "style": "width: 200px",
-                                            "id": "smoker",}),                               
-            "packyears": forms.TextInput(attrs={"id": "packyears",})                                       
+                                            "id": "smoker",}),
+            "packyears": forms.TextInput(attrs={"class": "form-control",
+                                                "id": "packyears",
+                                                "style": "width: 100px",}),
+            "height":  forms.NumberInput(attrs={"class": "form-control", "style": "width: 100px",}),
+            "weight":  forms.NumberInput(attrs={"class": "form-control", "style": "width: 100px",}),                               
             }
 
 class MedicalHistoryForm(ModelForm):
@@ -118,5 +127,11 @@ class SurgicalProceduralDetailForm(ModelForm):
 class RoboticArmLocationForm(ModelForm):
     class Meta:
         model = RoboticArmLocation
+        fields = "__all__"
+        exclude = ("card_id",)
+
+class TrocardLocationForm(ModelForm):
+    class Meta:
+        model = TrocardLocation
         fields = "__all__"
         exclude = ("card_id",)

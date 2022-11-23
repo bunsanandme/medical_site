@@ -57,11 +57,12 @@
           </h5>
           <div class="card-body">
             <form action="{% url "add_card" pacient.get_id %}" method="POST">
+              <div class="navbar">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-success">Добавить новый прием</button>
+                <button type="submit" class="btn btn-primary">Добавить новый прием</button>
+              </div>
+                
             </form>
-
-
             <table class="table table-hover">
 
             <tr>
@@ -78,7 +79,7 @@
               <td>{{card.creation_date|date:"SHORT_DATE_FORMAT"}}</td>
               <td>{{card.admission_date|date:"SHORT_DATE_FORMAT"}}</td>
               <td>{{card.sign_date|date:"SHORT_DATE_FORMAT"}}</td>
-              <td><a href="{% url "show_card" card.get_id %}" class="btn btn-dark">Показать</a></td>
+              <td><a href="{% url "show_card" card.get_id %}" class="btn btn-primary">Показать</a></td>
             </tr>
             {% endfor %}
             </table>

@@ -67,8 +67,8 @@ class PreprocedureCard(models.Model):
     sign_date = models.DateField(default=timezone.now())
     is_smoker = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
     packyears = models.IntegerField(default=0)
-    height = models.IntegerField(default=0)
-    weight = models.IntegerField(default=0)
+    height = models.IntegerField(default=0, validators=[MaxValueValidator(300)])
+    weight = models.IntegerField(default=0, validators=[MaxValueValidator(300)])
 
     def __str__(self):
         return str(self.card_id)+", "+self.admission_date.date().strftime(r"%d/%m/%Y")
@@ -225,25 +225,59 @@ class RoboticArmLocation(models.Model):
     arms_number = models.IntegerField(default=0)
     undergo_situations = models.IntegerField(default=0)
 
-    table11 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table12 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table13 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table14 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table11 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table12 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table13 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table14 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
 
-    table21 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table22 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table23 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table24 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table21 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table22 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table23 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table24 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
 
-    table31 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table32 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table33 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table34 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table31 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table32 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table33 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table34 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
 
-    table41 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table42 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table43 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    table44 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)]) 
+    table41 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table42 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table43 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True)
+    table44 = models.IntegerField( validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True, null=True) 
 
     def __str__(self):
         return f"RAL #{self.robotic_arm_loc_id}"
+
+class TrocardLocation(models.Model):
+    trocard_location_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+        Card,
+        on_delete=models.CASCADE,
+        default=0
+    )
+
+    table11 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table12 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table13 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table14 = models.CharField(default="", max_length=2, blank=True, null=True)
+
+    table21 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table22 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table23 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table24 = models.CharField(default="", max_length=2, blank=True, null=True)
+
+    table31 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table32 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table33 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table34 = models.CharField(default="", max_length=2, blank=True, null=True)
+
+    table41 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table42 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table43 = models.CharField(default="", max_length=2, blank=True, null=True)
+    table44 = models.CharField(default="", max_length=2, blank=True, null=True) 
+
+    local_anesthesy_used = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
+    type_dose = models.TextField(default=" ", blank=True)
+
+    def __str__(self):
+        return f"TL #{self.trocard_location_id}"

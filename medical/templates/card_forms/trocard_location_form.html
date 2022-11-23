@@ -1,0 +1,79 @@
+{% block trocard_location %}
+{% load static %}
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+        Расположение трокардов
+      </button>
+    </h2>
+    <div id="collapseEight" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_tl" card.card_id %}">
+              {% csrf_token %}
+
+              <div class="mb-3">
+                <h5>Пожалуйста, выберите расположение каждого троакара/разреза цифрой+буквой (используйте графическую подсказку ниже):</h5>
+                <img src="{% static "img/trocard_location.png" %}" class="rounded mx-auto d-block" alt="Responsive image">
+              </div>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td>Рука-камера</td>
+                    <td>Роботическая<br> рука 1</td>
+                    <td>Роботическая<br> рука 2</td>
+                    <td>Опциональная<br> рука </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Первая ситуация</td>
+                    <td>{{form_tl.table11}}</td>
+                    <td>{{form_tl.table12}}</td>
+                    <td>{{form_tl.table13}}</td>
+                    <td>{{form_tl.table14}}</td>
+                  </tr>
+                  <tr>
+                    <td>Вторая ситуация</td>
+                    <td>{{form_tl.table21}}</td>
+                    <td>{{form_tl.table22}}</td>
+                    <td>{{form_tl.table23}}</td>
+                    <td>{{form_tl.table24}}</td>
+                  </tr>
+                  <tr>
+                    <td>Третья ситуация</td>
+                    <td>{{form_tl.table31}}</td>
+                    <td>{{form_tl.table32}}</td>
+                    <td>{{form_tl.table33}}</td>
+                    <td>{{form_tl.table34}}</td>
+                  </tr>
+                  <tr>
+                    <td>Четвертая ситуация</td>
+                    <td>{{form_tl.table41}}</td>
+                    <td>{{form_tl.table42}}</td>
+                    <td>{{form_tl.table43}}</td>
+                    <td>{{form_tl.table44}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <br>
+              <div class="mb3">
+              <label class="form-label">Использовалась ли местная анестезия в месте разреза?</label>
+                {{form_tl.local_anesthesy_used}}
+              </div>
+              <div class="mb3">
+                <label class="form-label">Опишите тип и дозировку анестезии</label>
+                <p>{{form_tl.type_dose}}</p>
+              </div>
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
