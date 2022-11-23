@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm, SurgicalProceduralDetailForm
+from .forms import LoginForm, MedicalHistoryForm, PacientForm, PreprocedureCardForm, SurgicalHistoryForm, GastrointestinalProcedureForm, UrologicalProcedureForm, SurgicalProceduralDetailForm, RoboticArmLocationForm
 from django.contrib.auth.decorators import login_required
-from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail
+from .models import Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, F
 
@@ -132,13 +132,15 @@ def show_card(request, card_id):
     form_gp = GastrointestinalProcedureForm(instance=GastrointestinalProcedure.objects.get(card_id=card))
     form_up = UrologicalProcedureForm(instance=UrologicalProcedure.objects.get(card_id=card))
     form_spd = SurgicalProceduralDetailForm(instance=SurgicalProceduralDetail.objects.get(card_id=card))
+    form_ral = RoboticArmLocationForm(instance=RoboticArmLocation.objects.get(card_id=card))
     context = {"card": card, 
                 "form_preproc": form_preproc, 
                 "form_mh": form_mh,
                 "form_sh": form_sh,
                 "form_gp": form_gp,
                 "form_up": form_up,
-                "form_spd": form_spd,}
+                "form_spd": form_spd,
+                "form_ral": form_ral}
     return render(request, "pacient_card.html", context)
 
 @login_required
@@ -157,6 +159,8 @@ def add_new_card(request, pacient_id):
     uro_procedure.save()
     surg_proc_detail = SurgicalProceduralDetail(card_id = card)
     surg_proc_detail.save()
+    rob_arm_location = RoboticArmLocation(card_id = card)
+    rob_arm_location.save()
     return redirect(show_card, card.get_id())
 
 @login_required
@@ -241,3 +245,17 @@ def edit_spd(request, card_id):
             card.card_id = Card.objects.get(card_id=card_id)
             card.save()
         return redirect(show_card, card_id)
+
+@login_required
+def edit_ral(request, card_id):
+    if "editcard" in request.POST: 
+            card = RoboticArmLocation.objects.get(card_id=Card.objects.get(card_id=card_id))
+            form = RoboticArmLocationForm(data=request.POST)
+            print(form.errors)
+            if form.is_valid():
+                new_card = form.save(commit=False)
+                card = new_card
+                card.robotic_arm_loc_id = RoboticArmLocation.objects.get(card_id=Card.objects.get(card_id=card_id)).robotic_arm_loc_id
+                card.card_id = Card.objects.get(card_id=card_id)
+                card.save()
+            return redirect(show_card, card_id)

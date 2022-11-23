@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, widgets
-from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail
+from .models import MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation
 from datetime import datetime
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -13,8 +13,13 @@ class PacientForm(ModelForm):
         widgets = {
             "gender": forms.Select(attrs={"class": "form-select",
                                           "style": "width: 200px"}),
-            'date_birth': widgets.DateInput(attrs={'type': 'date',
-                                                   "style": "width: 200px"})
+            'date_birth': widgets.DateInput(attrs={"class": "form-control",
+                                                    'type': 'date',
+                                                   "style": "width: 200px"}),
+            "name": forms.TextInput(attrs={"class": "form-control",
+                                            "style": "width: 300px"}),
+            "surname": forms.TextInput(attrs={"class": "form-control",
+                                            "style": "width: 300px"}),
         }
 
     def clean_date_birth(self):
@@ -109,3 +114,9 @@ class SurgicalProceduralDetailForm(ModelForm):
             "special_conditions_present": widgets.Textarea(attrs={"class": "form-control",
             "rows": 2}),
         }
+
+class RoboticArmLocationForm(ModelForm):
+    class Meta:
+        model = RoboticArmLocation
+        fields = "__all__"
+        exclude = ("card_id",)

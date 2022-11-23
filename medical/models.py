@@ -1,6 +1,7 @@
 import datetime
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone 
 
 YESNO_CHOICES = (
@@ -209,5 +210,40 @@ class SurgicalProceduralDetail(models.Model):
     procedural_details = models.TextField(default=" ", blank=True)
     specification = models.TextField(default=" ", blank=True)
     special_conditions_present = models.TextField(default=" ", blank=True)
+
     def __str__(self):
         return f"SPD #{self.surg_proc_detail_id}"
+
+class RoboticArmLocation(models.Model):
+    robotic_arm_loc_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+        Card,
+        on_delete=models.CASCADE,
+        default=0
+    )
+
+    arms_number = models.IntegerField(default=0)
+    undergo_situations = models.IntegerField(default=0)
+
+    table11 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table12 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table13 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table14 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+
+    table21 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table22 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table23 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table24 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+
+    table31 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table32 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table33 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table34 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+
+    table41 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table42 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table43 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)])
+    table44 = models.IntegerField(default=12, validators=[MinValueValidator(1), MaxValueValidator(12)]) 
+
+    def __str__(self):
+        return f"RAL #{self.robotic_arm_loc_id}"

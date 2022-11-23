@@ -19,29 +19,36 @@
               </div>
               {% endif %}
               <div class="mb-3">
-                <b><label for="exampleInputEmail1" class="form-label">Имя</label></b>
+                <b><label class="form-label">Имя</label></b>
                 <p>{{form.name}}</p>
               </div>
               <div class="mb-3">
-                <b><label for="exampleInputPassword1" class="form-label">Фамилия</label></b>
+                <b><label class="form-label">Фамилия</label></b>
                 <p>{{form.surname}}</p>
               </div>
               <div class="mb-3">
-                <b><label for="exampleInputPassword1" class="form-label">Пол</label></b>
+                <b><label class="form-label">Пол</label></b>
                 {{form.gender}}
               </div>
               <div class="mb-3">
-                <b><label for="exampleInputPassword1" class="form-label">Дата рождения</label></b>
-                <p>{{form.date_birth}} ({{pacient.get_current_age}})</p>
+                <b><label class="form-label">Дата рождения</label></b>
+                <div class="form-group row">
+                  <div class="col">
+                    {{form.date_birth}}
+                  </div>
+                  <div class="col">
+                    <label class="form-label"><b>({{pacient.get_current_age}})</b></label>
+                  </div>
+                </div>
+                 
               </div>
-              <button type="submit" class="btn btn-danger" name="deletepacient"> Удалить </button>
+              <button type="submit" class="btn btn-danger" name="deletepacient" data-toggle="modal" data-target="#exampleModal"> Удалить </button>
               <button type="submit" class="btn btn-success" name="editpacient"> Изменить </button>
             </form>
           </div>
 
         </div>
       </div>
-
 
       <div class="col-xl-6">
         <div class="card">

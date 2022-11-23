@@ -1,0 +1,78 @@
+{% block robotic_arm_location %}
+{% load static %}
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+        Расположение роботических рук
+      </button>
+    </h2>
+    <div id="collapseSeven" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_ral" card.get_id %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="date" class="form-label">Сколько было задействовано роботических рук?</label>
+                {{form_ral.arms_number}}
+              </div>
+              <div class="mb-3">
+                <label for="date" class="form-label">Сколько было ситуаций прохождений?</label>
+                {{form_ral.undergo_situations}}
+              </div>
+              <br>
+              <div class="mb-3">
+                Взяв голову на 12 часов, отметьте расположение каждого робота-манипулятора вокруг пациента:
+                <img src="{% static "img/robotic_arm_location.png" %}" class="rounded mx-auto d-block" alt="Responsive image">
+              </div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td>Рука-камера</td>
+                    <td>Роботическая<br> рука 1</td>
+                    <td>Роботическая<br> рука 2</td>
+                    <td>Опциональная<br> рука </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Первая ситуация</td>
+                    <td>{{form_ral.table11}}</td>
+                    <td>{{form_ral.table12}}</td>
+                    <td>{{form_ral.table13}}</td>
+                    <td>{{form_ral.table14}}</td>
+                  </tr>
+                  <tr>
+                    <td>Вторая ситуация</td>
+                    <td>{{form_ral.table21}}</td>
+                    <td>{{form_ral.table22}}</td>
+                    <td>{{form_ral.table23}}</td>
+                    <td>{{form_ral.table24}}</td>
+                  </tr>
+                  <tr>
+                    <td>Третья ситуация</td>
+                    <td>{{form_ral.table31}}</td>
+                    <td>{{form_ral.table32}}</td>
+                    <td>{{form_ral.table33}}</td>
+                    <td>{{form_ral.table34}}</td>
+                  </tr>
+                  <tr>
+                    <td>Четвертая ситуация</td>
+                    <td>{{form_ral.table41}}</td>
+                    <td>{{form_ral.table42}}</td>
+                    <td>{{form_ral.table43}}</td>
+                    <td>{{form_ral.table44}}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
