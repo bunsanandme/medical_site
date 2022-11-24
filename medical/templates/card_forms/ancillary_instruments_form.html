@@ -1,0 +1,72 @@
+{% block ancillary_instruments %}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelwe" aria-expanded="false" aria-controls="collapseTwelwe" >
+        Дополнительные инструменты
+      </button>
+    </h2>
+    <div id="collapseTwelwe" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_ai" card.get_id %}">
+              {% csrf_token %}
+              <table class="table" style="width:60%">
+                <tr>
+                  <td>Степлер</td>
+                  <td>{{form_ai.tacker}}</td>
+                </tr>
+                <tr>
+                  <td>Клипсы</td>
+                  <td>{{form_ai.clips}}</td>
+                </tr>
+                <tr>
+                  <td>Степлер линейный</td>
+                  <td>{{form_ai.staplers_l}}</td>
+                </tr>
+                <tr>
+                  <td>Степлер круговой</td>
+                  <td>{{form_ai.staplers_c}}</td>
+                </tr>
+                <tr>
+                  <td>Другое</td>
+                  <td>{{form_ai.other}}</td>
+                </tr>
+              </table>
+              
+              <div class="mb-3">
+                Опишите инструменты
+                {{form_ai.comment}}
+              </div>
+              
+              <table class="table" style="width:60%">
+                <tr>
+                  <td>Monopolar</td>
+                  <td>{{form_ai.monopolar}}</td>
+                </tr>
+                <tr>
+                  <td>Bipolar</td>
+                  <td>{{form_ai.bipolar}}</td>
+                </tr>
+                <tr>
+                  <td>Ultrasound</td>
+                  <td>{{form_ai.ultrasound}}</td>
+                </tr>
+                <tr>
+                  <td>High energy device</td>
+                  <td>{{form_ai.high_energy_device}}</td>
+                </tr>
+              </table>
+
+
+
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -413,9 +413,9 @@ class InstrumentUsed(models.Model):
     table_pi2_10 = models.BooleanField(default=False, blank=True, )
 
     table_ca1 = models.BooleanField(default=False, blank=True, )
-    table_ca1 = models.BooleanField(default=False, blank=True, )
-    table_ca1 = models.BooleanField(default=False, blank=True, )
-    table_ca1 = models.BooleanField(default=False, blank=True, )
+    table_ca2 = models.BooleanField(default=False, blank=True, )
+    table_ca3 = models.BooleanField(default=False, blank=True, )
+    table_ca4 = models.BooleanField(default=False, blank=True, )
 
     table_us = models.BooleanField(default=False, blank=True, )
 
@@ -429,3 +429,26 @@ class InstrumentUsed(models.Model):
     table_rad3 = models.BooleanField(default=False, blank=True, )
     def __str__(self):
         return f"UI #{self.inst_use_id}"
+
+class AncillaryInstruments(models.Model):
+    ai_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+        Card,
+        on_delete=models.CASCADE,
+        default=0
+    )
+    
+    tacker = models.BooleanField(default=False, blank=True)
+    clips = models.BooleanField(default=False, blank=True)
+    staplers_l = models.BooleanField(default=False, blank=True)
+    staplers_c = models.BooleanField(default=False, blank=True)
+    other = models.BooleanField(default=False, blank=True)
+    comment = models.TextField(default=" ", blank=True)
+
+    monopolar = models.BooleanField(default=False, blank=True)
+    bipolar = models.BooleanField(default=False, blank=True)
+    ultrasound = models.BooleanField(default=False, blank=True)
+    high_energy_device = models.BooleanField(default=False, blank=True)
+    
+    def __str__(self):
+        return f"AI #{self.ai_id}"
