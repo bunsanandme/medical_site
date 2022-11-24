@@ -449,6 +449,48 @@ class AncillaryInstruments(models.Model):
     bipolar = models.BooleanField(default=False, blank=True)
     ultrasound = models.BooleanField(default=False, blank=True)
     high_energy_device = models.BooleanField(default=False, blank=True)
-    
+
     def __str__(self):
         return f"AI #{self.ai_id}"
+
+class PostProcedural(models.Model):
+    postproc_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+        Card,
+        on_delete=models.CASCADE,
+        default=0
+    )
+
+    brought_ICU = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет", blank=True, null=True)
+    start_ICU = models.DateTimeField(blank=True, null=True, default=timezone.now())
+    end_ICU = models.DateTimeField(blank=True, null=True, default=timezone.now())
+
+    generic_name_l1 = models.CharField(max_length=100, blank=True, null=True)
+    dose_l1 = models.IntegerField(blank=True, null=True)
+    unit_l1 = models.CharField(max_length=10, blank=True, null=True)
+
+    generic_name_l2 = models.CharField(max_length=100, blank=True, null=True)
+    dose_l2 = models.IntegerField(blank=True, null=True)
+    unit_l2 = models.CharField(max_length=10, blank=True, null=True)
+
+    generic_name_l3 = models.CharField(max_length=100, blank=True, null=True)
+    dose_l3 = models.IntegerField(blank=True, null=True)
+    unit_l3 = models.CharField(max_length=10, blank=True, null=True)
+
+    datetime_discharge = models.DateTimeField(blank=True, null=True, default=timezone.now())
+    adverse_event_noted = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
+    def __str__(self):
+        return f"PP #{self.postproc_id}"
+
+class FollowUp(models.Model):
+    fu_id = models.AutoField(primary_key=True)
+    card_id = models.OneToOneField(
+        Card,
+        on_delete=models.CASCADE,
+        default=0
+    )
+
+    date_followup = models.DateField(blank=True, null=True, default=timezone.now())
+    any_AE = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
+    def __str__(self):
+        return f"FU #{self.fu_id}"

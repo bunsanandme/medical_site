@@ -1,0 +1,79 @@
+{% block postprocedural %}
+
+<div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThirteenth" aria-expanded="false" aria-controls="collapseThirteenth">
+        Информация после процедур
+      </button>
+    </h2>
+    <div id="collapseThirteenth" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
+      <div class="accordion-body">
+        <div class="card">
+          <h5 class="card-title"></h5>
+          <div class="card-body">
+            <form method="POST" action="{% url "edit_pp" card.get_id %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="date" class="form-label">Был ли пациент доставлен в ОИТ/ПАУ после операции?</label>
+                {{form_pp.brought_ICU}}
+              </div>
+              <div class="mb-3" id="surgion_description">
+                <label for="date" class="form-label">Начало ОИТ/ПАУ</label>
+                {{form_pp.start_ICU}}
+              </div>
+              <div class="mb-3" id="surgion_description">
+                <label for="date" class="form-label">Конец ОИТ/ПАУ</label>
+                {{form_pp.end_ICU}}
+              </div>
+
+              <table class="table">
+                <tr>
+                  <td>Группа обезболивающих</td>
+                  <td>Название лекарства</td>
+                  <td>Дозировка</td>
+                  <td>Единица измерения</td>
+                </tr>
+                <tr>
+                  <td>
+                    Неопиоидные анальгетики (например,
+                    Аспирин, Диклофенак
+                    ибупрофен, парацетамол)</td>
+                  <td>{{form_pp.generic_name_l1}}</td>
+                  <td>{{form_pp.dose_l1}}</td>
+                  <td>{{form_pp.unit_l1}}</td>
+                </tr>
+                <tr>
+                  <td>
+                    Cлабые опиоиды (например,
+                    Трамадол, Тилидин)</td>
+                  <td>{{form_pp.generic_name_l2}}</td>
+                  <td>{{form_pp.dose_l2}}</td>
+                  <td>{{form_pp.unit_l2}}</td>
+                </tr>
+                <tr>
+                  <td>
+                    Cильные опиоиды (например,
+                    Морфин, Фентанил</td>
+                  <td>{{form_pp.generic_name_l3}}</td>
+                  <td>{{form_pp.dose_l3}}</td>
+                  <td>{{form_pp.unit_l3}}</td>
+                </tr>
+              </table>
+              
+              <div class="mb-3" id="surgion_description">
+                <label for="date" class="form-label">Дата и время выписки</label>
+                {{form_pp.datetime_discharge}}
+              </div>
+              <div class="mb-3" id="surgion_description">
+                <label for="date" class="form-label">Были ли отмечены какие-либо нежелательные явления после процедуры во время выписки?</label>
+                {{form_pp.adverse_event_noted}}
+              </div>
+              <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
