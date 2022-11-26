@@ -11,8 +11,8 @@ YESNO_CHOICES = (
 
 class Pacient(models.Model):
     GENDER_CHOICES = (
-        ("м","Мужчина"),
-        ("ж","Женщина"),
+        ("Мужчина","Мужчина"),
+        ("Женщина","Женщина"),
     )
     pacient_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
@@ -126,20 +126,20 @@ class GastrointestinalProcedure(models.Model):
     first_surgeon = models.CharField(max_length=40, default=" ", blank=True)
     second_surgeon = models.CharField(max_length=40, default=" ", blank=True)
 
-    cholecystectomy = models.CharField(max_length=80, default=" ", blank=True)
-    bariatric = models.CharField(max_length=80, default=" ", blank=True)
-    esophageal = models.CharField(max_length=80, default=" ", blank=True)
-    gastric = models.CharField(max_length=80, default=" ", blank=True)
-    hemicolectomy = models.CharField(max_length=80, default=" ", blank=True)
-    liver_surgery = models.CharField(max_length=80, default=" ", blank=True)
-    hernia_unilateral = models.CharField(max_length=80, default=" ", blank=True)
-    hernia_bilateral = models.CharField(max_length=80, default=" ", blank=True)
-    ventral_hernia = models.CharField(max_length=80, default=" ", blank=True)
-    fundoplication = models.CharField(max_length=80, default=" ", blank=True)
-    sigmoid_resection = models.CharField(max_length=80, default=" ", blank=True)
-    rectal = models.CharField(max_length=80, default=" ", blank=True)
-    esophagus_implants = models.CharField(max_length=80, default=" ", blank=True)
-    linx_implants = models.CharField(max_length=80, default=" ", blank=True)
+    cholecystectomy = models.BooleanField(default=False, blank=True)
+    bariatric = models.BooleanField(default=False, blank=True)
+    esophageal = models.BooleanField(default=False, blank=True)
+    gastric = models.BooleanField(default=False, blank=True)
+    hemicolectomy = models.BooleanField(default=False, blank=True)
+    liver_surgery = models.BooleanField(default=False, blank=True)
+    hernia_unilateral = models.BooleanField(default=False, blank=True)
+    hernia_bilateral = models.BooleanField(default=False, blank=True)
+    ventral_hernia = models.BooleanField(default=False, blank=True)
+    fundoplication = models.BooleanField(default=False, blank=True)
+    sigmoid_resection = models.BooleanField(default=False, blank=True)
+    rectal = models.BooleanField(default=False, blank=True)
+    esophagus_implants = models.BooleanField(default=False, blank=True)
+    linx_implants = models.BooleanField(default=False, blank=True)
     other = models.CharField(max_length=200, default=" ", blank=True)
 
     indication_for_procedure = models.TextField(default=" ", blank=True)
@@ -161,15 +161,15 @@ class UrologicalProcedure(models.Model):
     first_surgeon = models.CharField(max_length=40, default=" ", blank=True)
     second_surgeon = models.CharField(max_length=40, default=" ", blank=True)
 
-    radical_prostatectomy = models.CharField(max_length=200, default=" ", blank=True)
-    lymph_dissection = models.CharField(max_length=200, default=" ", blank=True)
-    adrenalectomy = models.CharField(max_length=200, default=" ", blank=True)
-    simple_prostatectomy = models.CharField(max_length=200, default=" ", blank=True)
-    partial_nephrectomy = models.CharField(max_length=200, default=" ", blank=True)
-    radical_nephrectomy = models.CharField(max_length=200, default=" ", blank=True)
-    radical_cystectomy  = models.CharField(max_length=200, default=" ", blank=True) 
-    ureter_reimplant  = models.CharField(max_length=200, default=" ", blank=True)
-    pyeloplasty_UPJ = models.CharField(max_length=200, default=" ", blank=True)
+    radical_prostatectomy = models.BooleanField(default=False, blank=True)
+    lymph_dissection = models.BooleanField(default=False, blank=True)
+    adrenalectomy = models.BooleanField(default=False, blank=True)
+    simple_prostatectomy = models.BooleanField(default=False, blank=True)
+    partial_nephrectomy = models.BooleanField(default=False, blank=True)
+    radical_nephrectomy = models.BooleanField(default=False, blank=True)
+    radical_cystectomy  = models.BooleanField(default=False, blank=True)
+    ureter_reimplant  = models.BooleanField(default=False, blank=True)
+    pyeloplasty_UPJ = models.BooleanField(default=False, blank=True)
     other = models.CharField(max_length=200, default=" ", blank=True)
 
     indication_for_procedure = models.TextField(default=" ", blank=True)
@@ -312,6 +312,7 @@ class RobotMalfunction(models.Model):
     default=0)
 
     MALFUNCTION_CHOISE = (
+        ("Нет", "Нет"),
         ("Неисправность консоли","Неисправность консоли"),
         ("Неисправность монитора/камеры","Неисправность монитора/камеры"),
         ("Ограниченное движение","Ограниченное движение"),
@@ -319,7 +320,7 @@ class RobotMalfunction(models.Model):
         ("Другое","Другое")
     )
 
-    malfunction = models.CharField(max_length=50, default=" ", choices=MALFUNCTION_CHOISE, blank=True)
+    malfunction = models.CharField(max_length=50, default="Нет", choices=MALFUNCTION_CHOISE)
     comment = models.TextField(default=" ", blank=True)
     def __str__(self):
         return f"RB #{self.rob_mal_id}"
@@ -358,10 +359,10 @@ class InstrumentUsed(models.Model):
         ("Olympus", "Olympus")
     )
 
-    diameter = models.CharField(max_length=4, default=" ", choices=DIAMETER_CHOICES, blank=True)
-    dimension = models.CharField(max_length=2, default=" ", choices=DIMENSION_CHOICES, blank=True)
-    optic_degree = models.CharField(max_length=10, default=" ", choices= OPTIC_DEGREE_CHOICES, blank=True)
-    manufacturer = models.CharField(max_length=10, default=" ", choices=MANUFACTURER_CHOICES, blank=True)
+    diameter = models.CharField(max_length=4, default=" ", choices=DIAMETER_CHOICES)
+    dimension = models.CharField(max_length=2, default=" ", choices=DIMENSION_CHOICES)
+    optic_degree = models.CharField(max_length=10, default=" ", choices= OPTIC_DEGREE_CHOICES)
+    manufacturer = models.CharField(max_length=10, default=" ", choices=MANUFACTURER_CHOICES)
 
     table_pi1_3 = models.BooleanField(default=False, blank=True)
     table_pi2_3 = models.BooleanField(default=False, blank=True, )

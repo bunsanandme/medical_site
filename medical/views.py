@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import FollowUp, Pacient, PreprocedureCard, Card, MedicalHistory, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation, BloodLoss, RobotMalfunction, InstrumentUsed, AncillaryInstruments, PostProcedural
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, F
+import os
 
 
 def user_login(request):
@@ -137,14 +138,13 @@ def show_card(request, card_id):
     form_up = UrologicalProcedureForm(instance=UrologicalProcedure.objects.get(card_id=card))
     form_spd = SurgicalProceduralDetailForm(instance=SurgicalProceduralDetail.objects.get(card_id=card))
     form_ral = RoboticArmLocationForm(instance=RoboticArmLocation.objects.get(card_id=card))
-    form_tl = TrocardLocationForm(instance=TrocardLocation.objects.get(card_id=card)),
+    form_tl = TrocardLocationForm(instance=TrocardLocation.objects.get(card_id=card))
     form_bl = BloodLossForm(instance=BloodLoss.objects.get(card_id=card))
     form_rm = RobotMalfunctionForm(instance=RobotMalfunction.objects.get(card_id=card))
     form_iu = InstrumentsUsedForm(instance=InstrumentUsed.objects.get(card_id=card))
     form_ai = AncillaryInstrumentsForm(instance=AncillaryInstruments.objects.get(card_id=card))
     form_pp = PostProceduralForm(instance=PostProcedural.objects.get(card_id=card))
     form_fu = FollowUpForm(instance=FollowUp.objects.get(card_id=card))
-    InstrumentUsed
     context = {"card": card, 
                 "form_preproc": form_preproc, 
                 "form_mh": form_mh,
@@ -394,3 +394,87 @@ def edit_fu(request, card_id):
                 card.card_id = Card.objects.get(card_id=card_id)
                 card.save()
             return redirect(show_card, card_id)
+
+
+
+def download_file(request, card_id):
+    import docx
+
+    def boolean_output(value):
+        if value:
+            return "YES"
+        return " "
+
+    def localize_yesno(value):
+        if value == "Да":
+            return "YES"
+        return "NO"
+    
+    def localize_gender(value):
+        if value == "Мужчина":
+            return "MALE"
+        return "FEMALE"
+
+    card = Card.objects.get(card_id = card_id)
+    preproc = PreprocedureCard.objects.get(card_id = card)
+    pacient = Pacient.objects.get(pacient_id = card.pacient_id.pacient_id)
+    medical_history = MedicalHistory.objects.get(card_id=card)
+    surg_history = SurgicalHistory.objects.get(card_id = card)
+    gastro_procedure = GastrointestinalProcedure.objects.get(card_id = card)
+
+    filepath = os.getcwd() + "\\medical\\media\\report.docx"
+    filepath_ready = os.getcwd() + "\\medical\\media\\report_ready.docx"
+    filename = f"Report of admission #{card_id}.docx"
+    doc = docx.Document(docx = filepath)
+    
+    paras = doc.paragraphs
+
+    for i in doc.tables[0].rows:
+            for j in i.cells:
+                
+                j.text = j.text.replace('[DIABETES]', boolean_output(medical_history.relevant_disease))
+                j.text = j.text.replace('[HYPERTENSION]', boolean_output(medical_history.has_hypertension))
+                j.text = j.text.replace('[CARDIOVASCULAR]', boolean_output(medical_history.has_cardiovascular))
+                j.text = j.text.replace('[CORD]', boolean_output(medical_history.has_cord))
+                j.text = j.text.replace('[DIABETES]', boolean_output(medical_history.relevant_disease))
+                j.text = j.text.replace('[RENAL_DISEASE]', boolean_output(medical_history.has_renal_disease))
+                j.text = j.text.replace('[LIVER]', boolean_output(medical_history.has_liver_disease))
+                j.text = j.text.replace('[APNEA]', boolean_output(medical_history.has_sleep_aphea))
+                j.text = j.text.replace('[GERD]', boolean_output(medical_history.has_gerd))
+                j.text = j.text.replace('[DEPRESSION]', boolean_output(medical_history.has_depression))
+                j.text = j.text.replace('[OSTEO]', boolean_output(medical_history.has_osteoarthritis))
+                j.text = j.text.replace('[CHRONIC]', boolean_output(medical_history.has_chronic_pain))
+                j.text = j.text.replace('[STROKE]', boolean_output(medical_history.has_stroke))
+
+    for para in paras:
+        para.text = para.text.replace('[RELEVANT_DISEASE]', localize_yesno(medical_history.relevant_disease))
+        para.text = para.text.replace('[ADMISSION_DATE]', preproc.admission_date.strftime("%d-%m-%Y %H:%M"))
+        para.text = para.text.replace('[SIGN_DATE]', preproc.sign_date.strftime("%d-%m-%Y"))
+        para.text = para.text.replace('[WEIGHT]', str(preproc.weight))
+        para.text = para.text.replace('[HEIGHT]', str(preproc.height))
+        para.text = para.text.replace('[SMOKER]', localize_yesno(preproc.is_smoker))
+        if localize_yesno(preproc.is_smoker) == "NO":
+            para.text = para.text.replace('[PACKYEARS]', "0")
+        para.text = para.text.replace('[PACKYEARS]', str(preproc.packyears))
+        para.text = para.text.replace('[BIRTH_YEAR]', pacient.date_birth.strftime("%d-%m-%Y"))
+        para.text = para.text.replace('[GENDER]', localize_gender(pacient.gender))
+        para.text = para.text.replace('[PACIENT]', str(pacient))
+        para.text = para.text.replace('[CREATION_DATE]', preproc.creation_date.strftime("%d-%m-%Y"))
+        
+        para.text = para.text.replace('[HAS_ABDOMINAL_SURGERY]', localize_yesno(surg_history.has_abdominal_surgery))
+        para.text = para.text.replace('[SURGION_DESCRIPTION]', surg_history.surgion_description)
+        
+        para.text = para.text.replace('[FIRST_SURGEON]', gastro_procedure.first_surgeon)
+        para.text = para.text.replace('[SECOND_SURGEON]', gastro_procedure.second_surgeon)
+
+        
+
+    doc.save(filepath_ready)
+    
+    fl = open(filepath_ready, 'rb')
+    mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    mime_type="pain/text"
+
+    response = HttpResponse(fl, content_type=mime_type)
+    response['Content-Disposition'] = f"attachment; filename={filename}"
+    return response

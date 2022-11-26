@@ -28,6 +28,7 @@ urlpatterns = [
     path("ai/edit/<int:card_id>", views.edit_ai, name="edit_ai"),
     path("pp/edit/<int:card_id>", views.edit_pp, name="edit_pp"),
     path("fu/edit/<int:card_id>", views.edit_fu, name="edit_fu"),
+    path("download/<int:card_id>", views.download_file, name = "create_report")
 ]
 
 urlpatterns += [ 

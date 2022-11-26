@@ -3,7 +3,7 @@
 <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-          Желудочно-кишечная процедура
+          Желудочно-кишечные процедуры
       </button>
     </h2>
     <div id="collapseFour" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
@@ -13,14 +13,24 @@
           <div class="card-body">
             <form method="POST" action="{% url "edit_gastro_procedure" card.get_id %}">
               {% csrf_token %}
-              <div class="mb-3">
-                <label for="mm" class="form-label">Первый хирург</label>
-                {{form_gp.first_surgeon}}
+              
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <div class="mb-3">
+                    <label class="form-label">Первый хирург</label>
+                    {{form_gp.first_surgeon}}
+                </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="mb-3">
+                    <label class="form-label">Второй хирург</label>
+                    {{form_gp.second_surgeon}}
+                  </div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="mm" class="form-label">Второй хирург</label>
-                {{form_gp.second_surgeon}}
-              </div>
+              <br>
+              
+              <h5>Выберите проводимые процедуры</h5>
               <table class="table">
                 <tbody>
                   <tr>
@@ -60,7 +70,7 @@
                     <td>{{form_gp.rectal}}</td>
                   </tr>
                   <tr>
-                    <td>Имплантат электростимулятора нижней сфинктер пищевода</td>
+                    <td>Имплантат электростимулятора нижнего сфинктера пищевода</td>
                     <td>{{form_gp.esophagus_implants}}</td>
                     <td>Имплантат магнитной антирефлюксной ленты LINX</td>
                     <td>{{form_gp.linx_implants}}</td>
@@ -71,7 +81,9 @@
                   </tr>
                   </tbody>
                   </table>
-                  <label for="mm" class="form-label">Заполните также</label>
+                  <br>
+                  <br> 
+                  <h5><label class="form-label">Заполните также:</label></h5>
                   <table>
                     <tbody>
                       <tr>

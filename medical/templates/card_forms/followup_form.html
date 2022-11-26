@@ -13,13 +13,20 @@
           <div class="card-body">
             <form method="POST" action="{% url "edit_fu" card.get_id %}">
               {% csrf_token %}
-              <div class="mb-3">
-                <label for="date" class="form-label">Дата контрольного визита</label>
-                {{form_fu.date_followup}}
-              </div>
-              <div class="mb-3" id="surgion_description">
-                <label for="date" class="form-label">Были ли нежелательные явления?</label>
-                {{form_fu.any_AE}}
+              
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <div class="mb-3">
+                    <label for="date" class="form-label">Дата контрольного визита</label>
+                    {{form_fu.date_followup}}
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="mb-3" id="surgion_description">
+                    <label for="date" class="form-label">Были ли нежелательные явления?</label>
+                    {{form_fu.any_AE}}
+                  </div>
+                </div>
               </div>
 
               <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>

@@ -5,6 +5,7 @@ $(document).ready(function() {
         $('#packyears').fadeIn(300);
     } 
     else {
+        
         $('#packyears').fadeOut(300);
     }
 
@@ -30,6 +31,7 @@ $("#smoker").change(function() {
         $('#packyears').fadeIn(300);
     } 
     else {
+        
         $('#packyears').fadeOut(300);
     }   
     });

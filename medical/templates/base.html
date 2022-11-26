@@ -24,7 +24,16 @@
     <link href="{% static "vendor/simple-datatables/style.css" %}" rel="stylesheet">
 
     <link href="{% static "css/style.css" %}" rel="stylesheet">
-
+    <style>
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+      }
+      input[type=number] {
+      -moz-appearance: textfield;
+      }
+      </style>
   </head>
   <body>
     <header id="header" class="header fixed-top d-flex align-items-center">

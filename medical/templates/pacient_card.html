@@ -10,18 +10,10 @@
       <form class="form-inline">
         <a href="/pacient/{{card.pacient_id.get_id}}" class="btn btn-primary">Назад</a>
         <button class="btn btn-primary" type="button" onclick="$('.collapse').collapse('hide')">Свернуть все</button>
+        <a class="btn btn-primary" href="{%url "create_report" card.card_id %}">Создать отчет</a>
       </form>
     </nav>
     <div class="accordion center-block">
-      
-    {% if form_preproc.errors %}
-      <div class="alert alert-danger" role="alert">
-        Возникли ошибки при заполнении:
-        {% for key, value in formerrors.items%}
-          <p>{{value}}</p>
-      </div>
-      {% endfor %}
-    {% endif %}
 
     {% include "preprocedure_form.html" %}
     {% block preprocedure %}

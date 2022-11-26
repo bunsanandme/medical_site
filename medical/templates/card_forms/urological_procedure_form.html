@@ -3,7 +3,7 @@
 <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-          Урологическая процедура
+          Урологические процедуры
       </button>
     </h2>
     <div id="collapseFive" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
@@ -13,14 +13,22 @@
           <div class="card-body">
             <form method="POST" action="{% url "edit_uro_procedure" card.get_id %}">
               {% csrf_token %}
-              <div class="mb-3">
-                <label for="mm" class="form-label">Первый хирург</label>
-                {{form_up.first_surgeon}}
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <div class="mb-3">
+                    <label class="form-label">Первый хирург</label>
+                    {{form_up.first_surgeon}}
+                </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="mb-3">
+                    <label class="form-label">Второй хирург</label>
+                    {{form_up.second_surgeon}}
+                  </div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="mm" class="form-label">Второй хирург</label>
-                {{form_up.second_surgeon}}
-              </div>
+              <br>
+              <h5>Выберите проводимые процедуры</h5>
               <table class="table">
                 <tbody>
                   <tr>
@@ -50,12 +58,20 @@
                   <tr>
                     <td>Пиелопластика UPJ</td>
                     <td>{{form_up.pyeloplasty_UPJ}}</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
                     <td>Другое</td>
                     <td>{{form_up.other}}</td>
+                    <td></td>
+                    <td></td>
                   </tr>
                   </tbody>
                   </table>
-                  <label for="mm" class="form-label">Заполните также</label>
+                  <br>
+                  <br> 
+                  <h5><label class="form-label">Заполните также:</label></h5>
                   <table>
                     <tbody>
                       <tr>

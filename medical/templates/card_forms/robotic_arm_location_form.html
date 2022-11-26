@@ -14,16 +14,28 @@
             <form method="POST" action="{% url "edit_ral" card.get_id %}">
               {% csrf_token %}
               <div class="mb-3">
-                <label for="date" class="form-label">Сколько было задействовано роботических рук?</label>
-                {{form_ral.arms_number}}
-              </div>
-              <div class="mb-3">
-                <label for="date" class="form-label">Сколько было ситуаций прохождений?</label>
-                {{form_ral.undergo_situations}}
-              </div>
+
+                <div class="form-group row">
+                  <div class="form-group col-md-4">
+                    <div class="mb-3">
+                      <label class="form-label">Сколько было задействовано роботических рук?</label>
+                      {{form_ral.arms_number}}
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <div class="mb-3">
+                      <label class="form-label">Сколько было ситуаций прохождений?</label>
+                      <br>
+                      <br>
+                      {{form_ral.undergo_situations}}
+                    </div>
+                  </div>
+                </div>
+                
+              <br>   
               <br>
               <div class="mb-3">
-                Взяв голову на 12 часов, отметьте расположение каждого робота-манипулятора вокруг пациента:
+                <h5>Взяв голову на 12 часов, отметьте расположение каждого робота-манипулятора вокруг пациента:</h5>
                 <img src="{% static "img/robotic_arm_location.png" %}" class="rounded mx-auto d-block" alt="Responsive image">
               </div>
               <table class="table">

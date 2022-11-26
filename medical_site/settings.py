@@ -59,6 +59,7 @@ TEMPLATES = [
         'DIRS': [
             BASE_DIR / "medical/templates",
             BASE_DIR / "medical/templates/card_forms",
+             BASE_DIR / "medical/media"
         ],
         'APP_DIRS': True,
         'OPTIONS': {

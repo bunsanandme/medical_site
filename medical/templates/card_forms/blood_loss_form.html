@@ -12,35 +12,52 @@
           <div class="card-body">
             <form method="POST" action="{% url "edit_bl" card.get_id %}">
               {% csrf_token %}
+
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <div class="mb-3">
+                    <label class="form-label">Потеря крови (мл)</label>
+                    <br><br>
+                    {{form_bl.blood_loss}}
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="mb-3">
+                    <label class="form-label">Был ли пациент переведен на операцию на коленях/открытую операцию?</label>
+                    {{form_bl.undergo_conversion_lap}}
+                  </div>
+                </div>
+              </div>
               
               <div class="mb-3">
-                <label class="form-label">Потеря крови (мл)</label>
-                {{form_bl.blood_loss}}
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Был ли пациент переведен на операцию на коленях/открытую операцию?</label>
-                {{form_bl.undergo_conversion_lap}}
+                <label class="form-label">Укажите причину конвертации</label>
+                {{form_bl.conversion_reason_lap}}
               </div>
                 <div class="mb-3">
-                    <label class="form-label">Укажите причину конвертации</label>
-              {{form_bl.conversion_reason_lab}}
-              </div>
-                <div class="mb-3">
-                    <label class="form-label">Пришлось ли пациенту переходить на открытую операцию?</label>
-              {{form_bl.undergo_conversion_open}}
-              </div>
+                  <label class="form-label">Пришлось ли пациенту переходить на открытую операцию?</label>
+                  {{form_bl.undergo_conversion_open}}
+                </div>
                 <div class="mb-3">
                     <label class="form-label">Укажите причину конвертации</label>
               {{form_bl.conversion_reason_open}}
               </div>
-                <div class="mb-3">
+
+              <div class="form-group row">
+                <div class="form-group col-md-4">
+                  <div class="mb-3">
                     <label class="form-label">Временный переход</label>
-              {{form_bl.temporary_conversion}}
-              </div>
-                <div class="mb-3">
+                    {{form_bl.temporary_conversion}}
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <div class="mb-3">
                     <label class="form-label">Закончена роботом?</label>
-              {{form_bl.end_by_robot}}
-                    </div>
+                    {{form_bl.end_by_robot}}
+                  </div>
+                </div>
+              </div>
+                
+                
 
               <button type="submit" class="btn btn-primary" name="editcard">Сохранить изменения</button>
             </form>

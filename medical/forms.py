@@ -1,6 +1,12 @@
 from django import forms
 from django.forms import ModelForm, widgets
-from .models import FollowUp, MedicalHistory, Pacient, PreprocedureCard, SurgicalHistory, GastrointestinalProcedure, UrologicalProcedure, SurgicalProceduralDetail, RoboticArmLocation, TrocardLocation, BloodLoss, RobotMalfunction, InstrumentUsed, AncillaryInstruments, PostProcedural
+from .models import (FollowUp, MedicalHistory, 
+                    Pacient, PreprocedureCard, 
+                    SurgicalHistory, GastrointestinalProcedure, 
+                    UrologicalProcedure, SurgicalProceduralDetail, 
+                    RoboticArmLocation, TrocardLocation, BloodLoss, 
+                    RobotMalfunction, InstrumentUsed, 
+                    AncillaryInstruments, PostProcedural)
 from datetime import datetime
 from zoneinfo import ZoneInfo
 class LoginForm(forms.Form):
@@ -59,7 +65,7 @@ class PreprocedureCardForm(ModelForm):
                                                 "id": "packyears",
                                                 "style": "width: 100px",}),
             "height":  forms.NumberInput(attrs={"class": "form-control", "style": "width: 100px", "id": "height"}),
-            "weight":  forms.NumberInput(attrs={"class": "form-control", "style": "width: 100px",}),                               
+            "weight":  forms.NumberInput(attrs={"class": "form-control", "style": "width: 100px", "id": "weight"}),                               
             }
     
     def clean_creation_date(self):
@@ -107,6 +113,7 @@ class GastrointestinalProcedureForm(ModelForm):
                     "special_conditions_present": widgets.Textarea(attrs={"class": "form-control",
                     "rows": 2}),
                     
+                    
         }
 
 class UrologicalProcedureForm(ModelForm):
@@ -137,52 +144,167 @@ class SurgicalProceduralDetailForm(ModelForm):
             "rows": 2}),
             "special_conditions_present": widgets.Textarea(attrs={"class": "form-control",
             "rows": 2}),
+            "position": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 300px"}),
+            "table_height": forms.NumberInput(attrs={"class": "form-control", "style": "width: 100px"}),
+            "surg_start_time": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
+            "docking_begins": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
+            "docking_ends": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
+            "console_start_time": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
+            "console_end_time": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
+            "surg_end_time": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
         }
 
 class RoboticArmLocationForm(ModelForm):
     class Meta:
         model = RoboticArmLocation
         fields = "__all__"
-        exclude = ("card_id",)
+        exclude = ("card_id",) 
+        widgets = {"arms_number": forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "undergo_situations": forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table11":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table12":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table13":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table14":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table21":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table22":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table23":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table24":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table31":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table32":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table33":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table34":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table41":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table42":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table43":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table44":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    }
 
 class TrocardLocationForm(ModelForm):
     class Meta:
         model = TrocardLocation
         fields = "__all__"
         exclude = ("card_id",)
+        widgets = { "table11":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table12":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table13":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table14":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table21":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table22":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table23":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table24":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table31":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table32":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table33":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table34":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table41":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table42":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table43":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table44":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "local_anesthesy_used": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 100px",}),
+                    "type_dose":  widgets.Textarea(attrs={"class": "form-control",
+            "rows": 2}),
+                    }
 
 class BloodLossForm(ModelForm):
     class Meta:
         model = BloodLoss
         fields = "__all__"
         exclude = ("card_id",)
+        widgets = { "blood_loss" :forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "undergo_conversion_lap": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 100px",}),
+                    "conversion_reason_lap": widgets.Textarea(attrs={"class": "form-control",
+                    "rows": 2}),
+                    "undergo_conversion_open": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 100px",}),
+                    "conversion_reason_open": widgets.Textarea(attrs={"class": "form-control",
+                    "rows": 2}),
+                    "temporary_conversion": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 100px",}),
+                    "end_by_robot": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 100px",}),
+
+        }
 
 class RobotMalfunctionForm(ModelForm):
     class Meta:
         model = RobotMalfunction
         fields = "__all__"
         exclude = ("card_id",)
+        widgets = {"malfunction": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 300px",}),
+                    "comment": widgets.Textarea(attrs={"class": "form-control",
+                    "rows": 2}),
+                    }
 
 class InstrumentsUsedForm(ModelForm):
     class Meta:
         model = InstrumentUsed
         fields = "__all__"
         exclude = ("card_id",)
+        widgets = { "diameter": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 150px",}),
+                    "dimension": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 150px",}),
+                    "optic_degree": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 150px",}),
+                    "manufacturer": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 150px",}),
+            
+        }
 
 class AncillaryInstrumentsForm(ModelForm):
     class Meta:
         model = AncillaryInstruments
         fields = "__all__"
         exclude = ("card_id",)
+        widgets = {"comment": widgets.Textarea(attrs={"class": "form-control",
+                    "rows": 2}),}
 
 class PostProceduralForm(ModelForm):
     class Meta:
         model = PostProcedural
         fields = "__all__"
         exclude = ("card_id",)
+        widgets = { "brought_ICU": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 150px",}),
+                    "start_ICU": widgets.DateInput(attrs={"class": "form-control",
+                                                   "type": "date",
+                                                   "style": "width: 200px"}),
+                    "end_ICU": widgets.DateInput(attrs={"class": "form-control",
+                                                   "type": "date",
+                                                   "style": "width: 200px"}),
+                    "generic_name_l1": forms.TextInput(attrs={"class": "form-control",
+                                            "style": "width: 200px"}),
+                    "dose_l1": forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "unit_l1": forms.TextInput(attrs={"class": "form-control",
+                                            "style": "width: 70px"}),
+                    "generic_name_l2": forms.TextInput(attrs={"class": "form-control",
+                                            "style": "width: 200px"}),
+                    "dose_l2": forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "unit_l2": forms.TextInput(attrs={"class": "form-control",
+                                            "style": "width: 70px"}),
+                    "generic_name_l3": forms.TextInput(attrs={"class": "form-control",
+                                            "style": "width: 200px"}),
+                    "dose_l3": forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "unit_l3": forms.TextInput(attrs={"class": "form-control",
+                                            "style": "width: 70px"}),
+                    "datetime_discharge": widgets.DateTimeInput(attrs={"class": "form-control",
+                                                   "type": "datetime-local",
+                                                   "style": "width: 200px"}),
+                    "adverse_event_noted": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 150px",}),
+        }
 
 class FollowUpForm(ModelForm):
     class Meta:
         model = FollowUp
         fields = "__all__"
         exclude = ("card_id",)
+        widgets = { "date_followup": widgets.DateInput(attrs={"class": "form-control",
+                                                   "type": "date",
+                                                   "style": "width: 200px"}),
+                    "any_AE": forms.Select(attrs={"class": "form-select",
+                                            "style": "width: 150px",}),}
