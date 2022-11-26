@@ -204,7 +204,7 @@ class SurgicalProceduralDetail(models.Model):
 
     table_height = models.IntegerField(default=0)
 
-    position = models.CharField(max_length=80, choices=POSITION_CHOICES, default="Положение лежа на спине",blank=True)
+    position = models.CharField(max_length=80, choices=POSITION_CHOICES, default="Положение лежа на спине")
 
     indication_for_procedure = models.TextField(default=" ", blank=True)
     procedural_details = models.TextField(default=" ", blank=True)

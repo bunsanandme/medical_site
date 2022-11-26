@@ -216,7 +216,7 @@ class BloodLossForm(ModelForm):
                     "undergo_conversion_lap": forms.Select(attrs={"class": "form-select",
                                             "style": "width: 100px",}),
                     "conversion_reason_lap": widgets.Textarea(attrs={"class": "form-control",
-                    "rows": 2}),
+                    "rows": 2, "id": "crl"}),
                     "undergo_conversion_open": forms.Select(attrs={"class": "form-select",
                                             "style": "width: 100px",}),
                     "conversion_reason_open": widgets.Textarea(attrs={"class": "form-control",

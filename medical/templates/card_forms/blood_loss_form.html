@@ -2,7 +2,7 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine" >
-        Потеря крови/Незапланированные переходы
+        <h5>Потеря крови/Незапланированные переходы</h5>
       </button>
     </h2>
     <div id="collapseNine" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
@@ -29,7 +29,7 @@
                 </div>
               </div>
               
-              <div class="mb-3">
+              <div class="mb-3" id="conversion_reason_lap">
                 <label class="form-label">Укажите причину конвертации</label>
                 {{form_bl.conversion_reason_lap}}
               </div>
@@ -37,7 +37,7 @@
                   <label class="form-label">Пришлось ли пациенту переходить на открытую операцию?</label>
                   {{form_bl.undergo_conversion_open}}
                 </div>
-                <div class="mb-3">
+                <div class="mb-3"  id="conversion_reason_open">
                     <label class="form-label">Укажите причину конвертации</label>
               {{form_bl.conversion_reason_open}}
               </div>

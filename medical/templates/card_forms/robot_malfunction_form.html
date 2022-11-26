@@ -2,7 +2,7 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen" >
-        Неисправности робота
+        <h5>Неисправности робота</h5>
       </button>
     </h2>
     <div id="collapseTen" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
@@ -17,7 +17,7 @@
                 <label class="form-label">Неисправности робота</label>
                 {{form_rm.malfunction}}
               </div>
-              <div class="mb-3">
+              <div class="mb-3" id="malfunction_comment">
                 <label class="form-label">Комментарий</label>
                 {{form_rm.comment}}
               </div>
