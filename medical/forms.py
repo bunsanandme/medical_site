@@ -261,7 +261,9 @@ class AncillaryInstrumentsForm(ModelForm):
         fields = "__all__"
         exclude = ("card_id",)
         widgets = {"comment": widgets.Textarea(attrs={"class": "form-control",
-                    "rows": 2}),}
+                    "rows": 2, "id": "extra_inst"}),
+                    "other": widgets.CheckboxInput(attrs={"id": "inst_other"}),
+                  }
 
 class PostProceduralForm(ModelForm):
     class Meta:

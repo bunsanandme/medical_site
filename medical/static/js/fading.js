@@ -15,10 +15,10 @@ $(document).ready(function() {
     }
     
     if ($('#id_has_abdominal_surgery option:selected').text() == "Да") {
-    $('#surgion_description').fadeIn(300);
+        $('#surgion_description').fadeIn(300);
     } 
     else {
-    $('#surgion_description').fadeOut(300);
+        $('#surgion_description').fadeOut(300);
     }
 
     if ($('#id_undergo_conversion_lap option:selected').text() == "Да") {
@@ -42,7 +42,26 @@ $(document).ready(function() {
         $('#malfunction_comment').fadeOut(300);
     }
 
+    if ($('#id_local_anesthesy_used option:selected').text() == "Да") {
+        $('#type_dose').fadeIn(300);
+    } 
+    else {
+        $('#type_dose').fadeOut(300);
+    }
 
+    if ($('#inst_other').is(':checked')) {
+        $('#extra_inst').fadeIn(300);
+    } 
+    else {
+        $('#extra_inst').fadeOut(300);
+    }
+
+    if ($('#id_brought_ICU option:selected').text() == "Да") {
+        $('#extra_dates').fadeIn(300);
+    } 
+    else {
+        $('#extra_dates').fadeOut(300);
+    }
       
 $("#smoker").change(function() {
     if ($('#smoker option:selected').text() == "Да") {
@@ -97,6 +116,33 @@ $('#id_malfunction').change(function() {
     } 
     else {
         $('#malfunction_comment').fadeOut(300);
+    }
+});
+
+$('#id_local_anesthesy_used').change(function() {
+    if ($('#id_local_anesthesy_used option:selected').text() == "Да") {
+        $('#type_dose').fadeIn(300);
+    } 
+    else {
+        $('#type_dose').fadeOut(300);
+    }
+});
+
+$('#inst_other').click(function() {
+    if ($('#inst_other').is(':checked')) {
+        $('#extra_inst').fadeIn(300);
+    } 
+    else {
+        $('#extra_inst').fadeOut(300);
+    }
+});
+
+$('#id_brought_ICU').change(function() {
+    if ($('#id_brought_ICU option:selected').text() == "Да") {
+        $('#extra_dates').fadeIn(300);
+    } 
+    else {
+        $('#extra_dates').fadeOut(300);
     }
 });
 });

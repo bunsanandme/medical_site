@@ -462,7 +462,7 @@ class PostProcedural(models.Model):
         default=0
     )
 
-    brought_ICU = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет", blank=True, null=True)
+    brought_ICU = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
     start_ICU = models.DateTimeField(blank=True, null=True, default=timezone.now())
     end_ICU = models.DateTimeField(blank=True, null=True, default=timezone.now())
 
