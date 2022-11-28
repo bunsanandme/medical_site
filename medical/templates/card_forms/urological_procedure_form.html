@@ -11,7 +11,7 @@
         <div class="card">
           <h5 class="card-title"></h5>
           <div class="card-body">
-            <form method="POST" action="{% url "edit_uro_procedure" card.get_id %}">
+            <form method="POST" id="form_up" action="{% url "edit_uro_procedure" card.get_id %}">
               {% csrf_token %}
               <div class="form-group row">
                 <div class="form-group col-md-4">

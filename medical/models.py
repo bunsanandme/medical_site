@@ -109,7 +109,7 @@ class SurgicalHistory(models.Model):
         default=0
     )
     has_abdominal_surgery = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
-    surgion_description = models.TextField(default="")
+    surgion_description = models.TextField(default="", blank=True)
 
 
     def __str__(self):
@@ -157,7 +157,6 @@ class UrologicalProcedure(models.Model):
         on_delete=models.CASCADE,
         default=0
     )
-
     first_surgeon = models.CharField(max_length=40, default=" ", blank=True)
     second_surgeon = models.CharField(max_length=40, default=" ", blank=True)
 

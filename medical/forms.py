@@ -112,8 +112,7 @@ class GastrointestinalProcedureForm(ModelForm):
                     "rows": 2}),
                     "special_conditions_present": widgets.Textarea(attrs={"class": "form-control",
                     "rows": 2}),
-                    
-                    
+                    "other": widgets.TextInput(attrs={"id": "other_gastro"})               
         }
 
 class UrologicalProcedureForm(ModelForm):
@@ -129,6 +128,7 @@ class UrologicalProcedureForm(ModelForm):
                     "rows": 2}),
                     "special_conditions_present": widgets.Textarea(attrs={"class": "form-control",
                     "rows": 2}),
+                    "other": widgets.TextInput(attrs={"id": "other_uro"})
                 }
 
 class SurgicalProceduralDetailForm(ModelForm):
@@ -147,12 +147,12 @@ class SurgicalProceduralDetailForm(ModelForm):
             "position": forms.Select(attrs={"class": "form-select",
                                             "style": "width: 300px"}),
             "table_height": forms.NumberInput(attrs={"class": "form-control", "style": "width: 100px"}),
-            "surg_start_time": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
-            "docking_begins": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
-            "docking_ends": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
-            "console_start_time": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
-            "console_end_time": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
-            "surg_end_time": widgets.TimeInput(attrs={"class": "form-control", "style": "width: 100px"}),
+            "surg_start_time": widgets.TimeInput(attrs={"type": "time", "class": "form-control", "style": "width: 150px"}),
+            "docking_begins": widgets.TimeInput(attrs={"type": "time","class": "form-control", "style": "width: 150px"}),
+            "docking_ends": widgets.TimeInput(attrs={"type": "time","class": "form-control", "style": "width: 150px"}),
+            "console_start_time": widgets.TimeInput(attrs={"type": "time", "class": "form-control", "style": "width: 150px"}),
+            "console_end_time": widgets.TimeInput(attrs={"type": "time","class": "form-control", "style": "width: 150px"}),
+            "surg_end_time": widgets.TimeInput(attrs={"type": "time","class": "form-control", "style": "width: 150px"}),
         }
 
 class RoboticArmLocationForm(ModelForm):
@@ -185,22 +185,22 @@ class TrocardLocationForm(ModelForm):
         model = TrocardLocation
         fields = "__all__"
         exclude = ("card_id",)
-        widgets = { "table11":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table12":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table13":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table14":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table21":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table22":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table23":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table24":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table31":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table32":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table33":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table34":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table41":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table42":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table43":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
-                    "table44":forms.NumberInput(attrs={"class": "form-control", "style": "width: 60px"}),
+        widgets = { "table11":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table12":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table13":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table14":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table21":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table22":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table23":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table24":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table31":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table32":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table33":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table34":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table41":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table42":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table43":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
+                    "table44":forms.TextInput(attrs={"class": "form-control", "style": "width: 60px"}),
                     "local_anesthesy_used": forms.Select(attrs={"class": "form-select",
                                             "style": "width: 100px",}),
                     "type_dose":  widgets.Textarea(attrs={"class": "form-control",
