@@ -465,17 +465,17 @@ class PostProcedural(models.Model):
     start_ICU = models.DateTimeField(blank=True, null=True, default=timezone.now())
     end_ICU = models.DateTimeField(blank=True, null=True, default=timezone.now())
 
-    generic_name_l1 = models.CharField(max_length=100, blank=True, null=True)
-    dose_l1 = models.IntegerField(blank=True, null=True)
-    unit_l1 = models.CharField(max_length=10, blank=True, null=True)
+    generic_name_l1 = models.CharField(max_length=100, blank=True, null=True, default="Нет")
+    dose_l1 = models.IntegerField(blank=True, default=0)
+    unit_l1 = models.CharField(max_length=10, blank=True, null=True, default="Нет")
 
-    generic_name_l2 = models.CharField(max_length=100, blank=True, null=True)
-    dose_l2 = models.IntegerField(blank=True, null=True)
-    unit_l2 = models.CharField(max_length=10, blank=True, null=True)
+    generic_name_l2 = models.CharField(max_length=100, blank=True, null=True, default="Нет")
+    dose_l2 = models.IntegerField(blank=True, null=True, default=0)
+    unit_l2 = models.CharField(max_length=10, blank=True, null=True, default="Нет")
 
-    generic_name_l3 = models.CharField(max_length=100, blank=True, null=True)
-    dose_l3 = models.IntegerField(blank=True, null=True)
-    unit_l3 = models.CharField(max_length=10, blank=True, null=True)
+    generic_name_l3 = models.CharField(max_length=100, blank=True, null=True, default="Нет")
+    dose_l3 = models.IntegerField(blank=True, null=True, default=0)
+    unit_l3 = models.CharField(max_length=10, blank=True, null=True, default="Нет")
 
     datetime_discharge = models.DateTimeField(blank=True, null=True, default=timezone.now())
     adverse_event_noted = models.CharField(max_length=3, choices=YESNO_CHOICES, default="Нет")
