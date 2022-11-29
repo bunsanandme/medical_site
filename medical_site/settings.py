@@ -21,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!@vfzfkcha_2o)7og7xhl@6*#*+hh4vwla04yg$s3ayp-u-#a-'
+import os
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['roboticreg.ru', 'www.roboticreg.ru']
+ALLOWED_HOSTS = ['roboticreg.ru', 'www.roboticreg.ru', "127.0.0.1"]
 
 
 # Application definition
@@ -59,7 +60,8 @@ TEMPLATES = [
         'DIRS': [
             BASE_DIR / "medical/templates",
             BASE_DIR / "medical/templates/card_forms",
-             BASE_DIR / "medical/media"
+             BASE_DIR / "medical/media",
+             BASE_DIR / "medical/"
         ],
         'APP_DIRS': True,
         'OPTIONS': {
