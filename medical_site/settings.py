@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-!@vfzfkcha_2o)7og7xhl@6*#*+hh4vwla04yg$s3ayp-u-#a-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['roboticreg.ru', 'www.roboticreg.ru']
 
 
 # Application definition
